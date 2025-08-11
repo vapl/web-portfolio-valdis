@@ -9,6 +9,7 @@ type Props = {
   progress?: number; // 0..1
   activeSegment?: number; // 0..segments-1
   segments?: number;
+  onPauseChange?: (paused: boolean) => void; 
 };
 
 export default function ProjectSlide({
@@ -18,7 +19,11 @@ export default function ProjectSlide({
   progress = 0,
   activeSegment = 0,
   segments = 3,
+  onPauseChange = () => {},
 }: Props) {
+    // augšā var paturēt lokāli
+    const pauseCursor = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect x='5' y='3' width='5' height='18' fill='white' stroke='black' stroke-width='1'/%3E%3Crect x='14' y='3' width='5' height='18' fill='white' stroke='black' stroke-width='1'/%3E%3C/svg%3E") 12 12, auto`;
+
   return (
     <div className="flex items-center justify-center h-svh w-full overflow-hidden text-text">
       {/* Cover */}
@@ -26,12 +31,12 @@ export default function ProjectSlide({
         src={image}
         alt={`${abbreviation} cover`}
         fill
-        className="object-cover brightness-[0.6]"
+        className="object-cover brightness-[0.6] ponter-events-none -z-10"
         priority
       />
 
-      <div className="flex items-center justify-center">
-        <div className="flex h-[500px] w-[500px] justify-center gap-10 relative">
+      <div className="flex flex-col items-center justify-center gap-16">
+        <div className="flex justify-center gap-10 relative">
           {/* Abbreviation on left */}
           <div className="flex items-center">
             <div className="flex flex-col items-center gap-6 text-7xl md:text-8xl font-thin">
@@ -42,10 +47,18 @@ export default function ProjectSlide({
           </div>
 
           {/* Vertical progress */}
-          <div className="flex items-center">
+          <div 
+            className="flex items-center"
+            onMouseEnter={() => onPauseChange(true)} 
+            onMouseLeave={() => onPauseChange(false)}
+            onTouchStart={() => onPauseChange(true)}
+            onTouchEnd={() => onPauseChange(false)} 
+            style={{ cursor: pauseCursor}}
+          >
             <div className="flex h-[320px] w-[4px]">
               {/* slots ar konst. atstarpi starp tiem */}
               <div className="flex h-full flex-col items-center gap-3">
+                
                 {Array.from({ length: segments }).map((_, i) => {
                   const isActive = i === activeSegment;
 
@@ -78,23 +91,26 @@ export default function ProjectSlide({
             </div>
           </div>
 
-          {/* P pa labi */}
+          {/* P on right */}
           <div className="flex items-center">
             <div className="text-7xl md:text-8xl font-semibold text-foreground/90">
               P
             </div>
           </div>
 
-          {/* poga */}
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+          
+        </div>
+        {/* button */}
+          <div className="flex items-center">
             <Link
-              href={`/projects/${slug}`}
-              className="rounded-xl bg-primary px-6 py-3 text-sm text-foreground/90 hover:opacity-90 transition"
+                href={`/projects/${slug}`}
+                className="rounded-xl border-2 border-secondary px-6 py-3 text-sm text-foreground/90 hover:bg-secondary transition"
+                onMouseEnter={() => onPauseChange(true)} 
+                onMouseLeave={() => onPauseChange(false)}
             >
               Go to Project
             </Link>
           </div>
-        </div>
       </div>
     </div>
   );

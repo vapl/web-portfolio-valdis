@@ -11,11 +11,13 @@ export default function HeroSlideshow({ segmentMs = 3000 }: { segmentMs?: number
   const [index, setIndex] = useState(0); // current slide index
   const [progress, setProgress] = useState(0); // current segment 0..1
   const [activeSegment, setActiveSegment] = useState(0);
+  const [paused, setPaused] = useState(false);
   const rafRef = useRef<number | null>(null);
   const startRef = useRef<number | null>(null);
   const lastSegmentRef = useRef<number>(-1);
   const segCountRef = useRef(segCount);
   const segDurRef = useRef<number>(segmentMs);
+  const pauseStartRef = useRef<number | null>(null);
 
   // Reset animation when segment count or duration changes (if you change constants)
   useEffect(() => {
@@ -31,6 +33,22 @@ export default function HeroSlideshow({ segmentMs = 3000 }: { segmentMs?: number
   // Main RAF loop: advance per-segment and switch slides each segment
   useEffect(() => {
     const tick = (t: number) => {
+      // Enter pause mode
+      if (paused) {
+        if (pauseStartRef.current == null) pauseStartRef.current = t;
+        rafRef.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      // Exit pause mode
+      if (pauseStartRef.current != null) {
+        const pausedFor = t - pauseStartRef.current;
+        if (startRef.current != null) {
+          startRef.current += pausedFor;
+        }
+        pauseStartRef.current = null
+      }
+
       if (startRef.current == null) startRef.current = t;
       const elapsed = t - startRef.current;
 
@@ -57,7 +75,7 @@ export default function HeroSlideshow({ segmentMs = 3000 }: { segmentMs?: number
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [paused]);
 
   const current = projectList[index];
 
@@ -88,6 +106,7 @@ export default function HeroSlideshow({ segmentMs = 3000 }: { segmentMs?: number
             progress={progress}
             activeSegment={activeSegment}
             segments={segCount}
+            onPauseChange={setPaused}
           />
         </motion.div>
       </AnimatePresence>
