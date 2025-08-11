@@ -8,14 +8,15 @@
   --font-roboto: var(--font-roboto), system-ui, sans-serif;
 
   /* Colors */
-  --color-background: #0f0a0a;
-  --color-foreground: #ffffff;
-  --color-text: #e5e7eb;
-  --color-muted: #9ca3af;
+  --color-background: #121212; /* Deep charcoal */
+  --color-foreground: #f4f4f5; /* Near white */
+  --color-text: #d1d5db; /* Cool light gray */
+  --color-muted: #6b7280; /* Neutral muted gray */
 
-  --color-primary: #a78bfa;
-  --color-secondary: #f472b6;
-  --color-accent: #ec4899;
+  /* Brand */
+  --color-primary: #d97706; /* Burnt amber */
+  --color-secondary: #b45309; /* Darker burnt amber */
+  --color-accent: #2563eb; /* Strong blue for cool contrast */
 }
 
 :root {

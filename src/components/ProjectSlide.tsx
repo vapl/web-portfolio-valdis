@@ -9,7 +9,7 @@ type Props = {
   progress?: number; // 0..1
   activeSegment?: number; // 0..segments-1
   segments?: number;
-  onPauseChange?: (paused: boolean) => void; 
+  onPauseChange?: (paused: boolean) => void;
 };
 
 export default function ProjectSlide({
@@ -21,8 +21,8 @@ export default function ProjectSlide({
   segments = 3,
   onPauseChange = () => {},
 }: Props) {
-    // augšā var paturēt lokāli
-    const pauseCursor = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect x='5' y='3' width='5' height='18' fill='white' stroke='black' stroke-width='1'/%3E%3Crect x='14' y='3' width='5' height='18' fill='white' stroke='black' stroke-width='1'/%3E%3C/svg%3E") 12 12, auto`;
+  // augšā var paturēt lokāli
+  const pauseCursor = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect x='5' y='3' width='5' height='18' fill='white' stroke='black' stroke-width='1'/%3E%3Crect x='14' y='3' width='5' height='18' fill='white' stroke='black' stroke-width='1'/%3E%3C/svg%3E") 12 12, auto`;
 
   return (
     <div className="flex items-center justify-center h-svh w-full overflow-hidden text-text">
@@ -47,18 +47,17 @@ export default function ProjectSlide({
           </div>
 
           {/* Vertical progress */}
-          <div 
+          <div
             className="flex items-center"
-            onMouseEnter={() => onPauseChange(true)} 
+            onMouseEnter={() => onPauseChange(true)}
             onMouseLeave={() => onPauseChange(false)}
             onTouchStart={() => onPauseChange(true)}
-            onTouchEnd={() => onPauseChange(false)} 
-            style={{ cursor: pauseCursor}}
+            onTouchEnd={() => onPauseChange(false)}
+            style={{ cursor: pauseCursor }}
           >
             <div className="flex h-[320px] w-[4px]">
               {/* slots ar konst. atstarpi starp tiem */}
               <div className="flex h-full flex-col items-center gap-3">
-                
                 {Array.from({ length: segments }).map((_, i) => {
                   const isActive = i === activeSegment;
 
@@ -70,7 +69,7 @@ export default function ProjectSlide({
                       {/* progresējošā pārklājuma līnija (no augšas uz leju) */}
                       <div
                         key={`${i}-${isActive}`} // force remount, lai nebūtu animācijas atpakaļ lecot uz nākamo
-                        className={`absolute top-0 left-0 w-[3px] rounded origin-top bg-accent ${
+                        className={`absolute top-0 left-0 w-[3px] rounded origin-top bg-primary ${
                           isActive ? "" : "opacity-0"
                         }`}
                         style={{
@@ -97,20 +96,18 @@ export default function ProjectSlide({
               P
             </div>
           </div>
-
-          
         </div>
         {/* button */}
-          <div className="flex items-center">
-            <Link
-                href={`/projects/${slug}`}
-                className="rounded-xl border-2 border-secondary px-6 py-3 text-sm text-foreground/90 hover:bg-secondary transition"
-                onMouseEnter={() => onPauseChange(true)} 
-                onMouseLeave={() => onPauseChange(false)}
-            >
-              Go to Project
-            </Link>
-          </div>
+        <div className="flex items-center">
+          <Link
+            href={`/projects/${slug}`}
+            className="rounded-xl border-2 border-primary px-6 py-3 text-md text-primary hover:text-foreground/90 hover:bg-primary transition"
+            onMouseEnter={() => onPauseChange(true)}
+            onMouseLeave={() => onPauseChange(false)}
+          >
+            Go to Project
+          </Link>
+        </div>
       </div>
     </div>
   );
