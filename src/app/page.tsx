@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main>
       <Navigation />
-      <HeroSlideshow />
+      <HeroSlideshow segmentMs={6000} />
     </main>
   );
 }

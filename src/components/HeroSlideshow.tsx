@@ -5,10 +5,7 @@ import ProjectSlide from "@/components/ProjectSlide";
 import { projectList } from "@/data/projectList";
 import { AnimatePresence, motion } from "framer-motion";
 
-// Duration for one segment in milliseconds (affects slide switch cadence)
-const SEGMENT_DURATION_MS = 3000;
-
-export default function HeroSlideshow() {
+export default function HeroSlideshow({ segmentMs = 3000 }: { segmentMs?: number}) {
   const segCount = Math.max(1, Math.min(3, projectList.length));
 
   const [index, setIndex] = useState(0); // current slide index
@@ -18,18 +15,18 @@ export default function HeroSlideshow() {
   const startRef = useRef<number | null>(null);
   const lastSegmentRef = useRef<number>(-1);
   const segCountRef = useRef(segCount);
-  const segDurRef = useRef<number>(SEGMENT_DURATION_MS);
+  const segDurRef = useRef<number>(segmentMs);
 
   // Reset animation when segment count or duration changes (if you change constants)
   useEffect(() => {
     segCountRef.current = segCount;
-    segDurRef.current = SEGMENT_DURATION_MS;
+    segDurRef.current = segmentMs;
 
     startRef.current = null;
     lastSegmentRef.current = -1;
     setProgress(0);
     setActiveSegment(0);
-  }, [segCount]);
+  }, [segCount, segmentMs]);
 
   // Main RAF loop: advance per-segment and switch slides each segment
   useEffect(() => {
