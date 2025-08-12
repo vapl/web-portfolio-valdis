@@ -20,7 +20,7 @@ export const projectList = [
     githubUrl: "https://github.com/vapl/nfts-guard",
   },
   {
-    slug: "Talk'n Go",
+    slug: "talk-n-go",
     abbreviation: "TG",
     title: "Talk'n Go",
     description:

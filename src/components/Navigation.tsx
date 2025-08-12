@@ -24,7 +24,7 @@ export default function Navigation() {
                 AboutHovered ? "text-[#d97706]" : "text-text/80"
               }`}
               style={{
-                transitionDelay: AboutHovered ? `${i * 90}ms` : "0ms",
+                transitionDelay: AboutHovered ? `${i * 80}ms` : "0ms",
                 marginTop: AboutHovered && i !== 0 ? "0.5rem" : "0.25rem",
               }}
             >
@@ -35,7 +35,7 @@ export default function Navigation() {
       </div>
 
       {/* Contact (right) */}
-      <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden md:block cursor-pointer z-[999]">
+      <div className="absolute right-9 top-1/2 -translate-y-1/2 hidden md:block cursor-pointer z-[999]">
         <Link
           href={"/contact"}
           className="group flex flex-col items-center tracking-[0.25em] text-text/80"
@@ -49,7 +49,7 @@ export default function Navigation() {
                 ContactsHovered ? "text-[#d97706]" : "text-text/80"
               }`}
               style={{
-                transitionDelay: ContactsHovered ? `${i * 90}ms` : "0ms",
+                transitionDelay: ContactsHovered ? `${i * 80}ms` : "0ms",
                 marginTop: ContactsHovered && i !== 0 ? "0.5rem" : "0.25rem",
               }}
             >
