@@ -14,7 +14,13 @@ export const projectList = [
       "Supabase",
       "PostgreSQL",
     ],
-    year: 2025,
+    content: `
+        <h2>Overview</h2>
+      <p>Portal with scene transitions and section-based routing.</p>
+      <h3>Stack</h3>
+      <ul><li>Next.js App Router</li><li>Tailwind</li></ul>
+    `,
+    publishedAt: "2025-01-12",
     image: "/images/projects/nfts-guard-cover.png",
     liveUrl: "https://nftsguard.com",
     githubUrl: "https://github.com/vapl/nfts-guard",
@@ -34,7 +40,7 @@ export const projectList = [
       "Supabase",
       "PostgreSQL",
     ],
-    year: 2025,
+    publishedAt: "2025-01-12",
     image: "/images/projects/talk-n-go.png",
     liveUrl: "https://nftsguard.com",
     githubUrl: "https://github.com/vapl/nfts-guard",
