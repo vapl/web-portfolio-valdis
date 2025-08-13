@@ -1,11 +1,13 @@
 import Navigation from "@/components/Navigation";
 import HeroSlideshow from "@/components/HeroSlideshow";
+import { getAllProjects } from "@/lib/getProjects";
 
 export default function Home() {
+  const projects = getAllProjects();
   return (
     <main>
       <Navigation />
-      <HeroSlideshow segmentMs={6000} />
+      <HeroSlideshow segmentMs={6000} projects={projects} />
     </main>
   );
 }

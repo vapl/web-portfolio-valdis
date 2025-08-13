@@ -2,11 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 import ProjectSlide from "@/components/ProjectSlide";
-import { projectList } from "@/data/projectList";
 import { AnimatePresence, motion } from "framer-motion";
+import { ProjectMeta } from "@/lib/getProjects";
 
-export default function HeroSlideshow({ segmentMs = 3000 }: { segmentMs?: number}) {
-  const segCount = Math.max(1, Math.min(3, projectList.length));
+type HeroSlideshowProps = {
+  projects: ProjectMeta[];
+  segmentMs?: number;
+};
+
+export default function HeroSlideshow({
+  segmentMs = 3000,
+  projects,
+}: HeroSlideshowProps) {
+  const segCount = Math.max(1, Math.min(3, projects.length));
 
   const [index, setIndex] = useState(0); // current slide index
   const [progress, setProgress] = useState(0); // current segment 0..1
@@ -46,7 +54,7 @@ export default function HeroSlideshow({ segmentMs = 3000 }: { segmentMs?: number
         if (startRef.current != null) {
           startRef.current += pausedFor;
         }
-        pauseStartRef.current = null
+        pauseStartRef.current = null;
       }
 
       if (startRef.current == null) startRef.current = t;
@@ -65,7 +73,7 @@ export default function HeroSlideshow({ segmentMs = 3000 }: { segmentMs?: number
       // Switch slide on every segment transition
       if (active !== lastSegmentRef.current) {
         lastSegmentRef.current = active;
-        setIndex((i) => (i + 1) % projectList.length);
+        setIndex((i) => (i + 1) % projects.length);
       }
 
       rafRef.current = requestAnimationFrame(tick);
@@ -75,9 +83,9 @@ export default function HeroSlideshow({ segmentMs = 3000 }: { segmentMs?: number
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [paused]);
+  }, [paused, projects.length]);
 
-  const current = projectList[index];
+  const current = projects[index];
 
   // --- Motion variants for slide transition (fade + slight slide) ---
   const variants = {
@@ -101,7 +109,7 @@ export default function HeroSlideshow({ segmentMs = 3000 }: { segmentMs?: number
         >
           <ProjectSlide
             abbreviation={current.abbreviation}
-            image={current.image}
+            image={current.cover}
             slug={current.slug}
             progress={progress}
             activeSegment={activeSegment}
