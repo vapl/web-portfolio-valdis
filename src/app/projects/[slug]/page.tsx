@@ -1,5 +1,5 @@
 import { getProjectBySlug, getProjectSlugs } from "@/lib/getProjects";
-import { CaseStuddyLayout } from "@/components/case/layout";
+import { CaseStudyLayout } from "@/components/case/layout";
 import * as Blocks from "@/components/case/blocks";
 import { compileMDX } from "next-mdx-remote/rsc";
 
@@ -17,7 +17,7 @@ export const ProjectPage = async ({ params }: { params: { slug: string } }) => {
     options: { parseFrontmatter: false },
   });
 
-  return <CaseStuddyLayout meta={meta}>{mdx.content}</CaseStuddyLayout>;
+  return <CaseStudyLayout meta={meta}>{mdx.content}</CaseStudyLayout>;
 };
 
 export default ProjectPage;
