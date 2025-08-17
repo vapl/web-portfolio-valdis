@@ -1,5 +1,8 @@
 "use client";
 import HeroShrinkingCover from "../hero-covers/HeroShrinkingCover";
+import SideToc from "./SideToc";
+
+type TocItem = { id: string; label: string };
 
 type LayoutProps = {
   meta: {
@@ -12,11 +15,12 @@ type LayoutProps = {
     githubUrl?: string;
   };
   children: React.ReactNode;
+  toc?: TocItem[];
 };
 
 export const CaseStudyLayout = ({ meta, children }: LayoutProps) => {
   return (
-    <main className="min-h-screen text-text bg-background">
+    <main className="min-h-screen text-text bg-background ">
       <HeroShrinkingCover
         imageSrc={meta.cover}
         title={meta.title}
@@ -27,10 +31,13 @@ export const CaseStudyLayout = ({ meta, children }: LayoutProps) => {
         containerPadMd={290}
       />
 
-      {/* Body container — match paddings (px-16 / md:px-24) so edges line up */}
-      <section className="max-w-5xl mx-auto px-16 md:px-24 py-10 md:py-14">
-        {children}
-      </section>
+      {/* --- BODY --- */}
+      <div className="w-full mx-auto px-6 md:px-8 lg:px-12">
+        <div className="flex items-center justify-center gap-8">
+          {/* Content */}
+          <article className="mx-auto lg:mx-0 px-9 md:px-6">{children}</article>
+        </div>
+      </div>
     </main>
   );
 };
