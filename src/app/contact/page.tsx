@@ -151,7 +151,7 @@ export default function ContactPage() {
           </div>
 
           {/* RIGHT column (form placeholder — next step we’ll add conditional reveal) */}
-          <div className="flex flex-col items-center justify-between pt-0 xl:pt-53">
+          <div className="flex flex-col items-center justify-between pt-0 pb-18 xl:pt-53">
             <motion.div
               className="w-full"
               initial={{ opacity: 0, y: 8 }}
