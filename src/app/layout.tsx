@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import HeaderLogo from "@/components/HeaderLogo";
 import "./globals.css";
+import Navigation from "@/components/Navigation";
 
 const geistSans = Geist({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -35,6 +36,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} font-roboto antialiased bg-background`}
       >
         <HeaderLogo />
+        <Navigation />        
         {children}
       </body>
     </html>
