@@ -10,7 +10,7 @@ export default function Navigation() {
   return (
     <>
       {/* About (left) */}
-      <div className="absolute left-5 md:left-9 top-1/2 -translate-y-1/2 block cursor-pointer z-[999]">
+      <div className="fixed left-5 md:left-9 top-1/2 -translate-y-1/2 block cursor-pointer z-[999]">
         <Link
           href={"/about"}
           className={`group flex flex-col items-center tracking-[0.25em] text-text/80`}
@@ -35,7 +35,7 @@ export default function Navigation() {
       </div>
 
       {/* Contact (right) */}
-      <div className="absolute right-5 md:right-9 top-1/2 -translate-y-1/2 block cursor-pointer z-[999]">
+      <div className="fixed right-5 md:right-9 top-1/2 -translate-y-1/2 block cursor-pointer z-[999]">
         <Link
           href={"/contact"}
           className="group flex flex-col items-center tracking-[0.25em] text-text/80"

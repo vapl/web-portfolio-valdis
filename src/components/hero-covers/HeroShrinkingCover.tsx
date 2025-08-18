@@ -142,9 +142,6 @@ const HeroShrinkingCover = ({
           </div>
         </motion.div>
       </div>
-
-      {/* Scroll travel after sticky finishes (controls how long the effect runs) */}
-      <div style={{ height: `${shrinkDistance}px` }} />
     </section>
   );
 };

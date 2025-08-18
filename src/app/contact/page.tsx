@@ -1,5 +1,5 @@
 "use client";
-/* eslint-disable react/no-unescaped-entities */
+
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -9,10 +9,11 @@ function splitText(text: string) {
 }
 
 export default function ContactPage() {
-  const [intro, setIntro] = useState(true);        // intro overlay is visible
+  const [intro, setIntro] = useState(true); // intro overlay is visible
   const [showMain, setShowMain] = useState(false); // render main only after intro exit
-  const [delay, setDelay] = useState(true);        // small delay for accent line
-  const [isCaret, setIsCaret] = useState(false)
+  const [delay, setDelay] = useState(true); // small delay for accent line
+  const [isCaret, setIsCaret] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const title = "Let's talk";
 
   // Close intro after 1.3s (adjust as needed)
@@ -28,10 +29,8 @@ export default function ContactPage() {
     return () => clearTimeout(t);
   }, [showMain]);
 
-  
-
   return (
-    <div className="relative w-full min-h-screen">
+    <main className="relative w-full min-h-screen bg-background">
       {/* --- Intro overlay (centered). 'mode="wait"' ensures exit completes before main mounts --- */}
       <AnimatePresence
         mode="wait"
@@ -39,7 +38,7 @@ export default function ContactPage() {
       >
         {intro && (
           <motion.div
-            className="fixed inset-0 z-20 flex items-center justify-center bg-background"
+            className="fixed inset-0 z-20 flex items-center justify-center"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }} // slower fade-out so it's noticeable
@@ -81,34 +80,53 @@ export default function ContactPage() {
 
       {/* --- Main layout (two columns) — rendered ONLY after intro fully exited --- */}
       {showMain && (
-        <div className="grid grid-cols-1 gap-16 md:grid-cols-2 min-h-screen max-w-7xl mx-auto px-6 md:px-16">
+        <div className="grid grid-cols-1 gap-8 xl:gap-16 xl:grid-cols-2 min-h-screen max-w-4xl xl:max-w-7xl mx-auto px-13 md:px-16">
           {/* LEFT column */}
-          <div className="flex flex-col justify-around">
-            <div className="w-full">
-              {/* Shared title (no initial fade; avoid crossfade look) */}
-              <motion.h1
-                layoutId="title"
-                initial={false} // do not re-run initial opacity animation
-                className="text-6xl md:text-8xl text-primary font-semibold leading-none"
-                transition={{ type: "spring", stiffness: 90, damping: 20, mass: 0.9 }}
-              >
-                {title}
-              </motion.h1>
+          <div
+            className={`flex flex-col justify-between ${
+              !isVisible && "h-36 md:h-56 xl:h-full"
+            } pt-32 pb-0 xl:pb-18 gap-y-0 md:gap-y-8 xl:gap-y-16`}
+          >
+            <div className="flex flex-col justify-center gap-8 xl:gap-16">
+              <div className="w-full">
+                {/* Shared title (no initial fade; avoid crossfade look) */}
+                <motion.h1
+                  layoutId="title"
+                  initial={false} // do not re-run initial opacity animation
+                  className="text-6xl md:text-8xl text-primary font-semibold leading-none"
+                  transition={{
+                    type: "spring",
+                    stiffness: 90,
+                    damping: 20,
+                    mass: 0.9,
+                  }}
+                >
+                  {title}
+                </motion.h1>
 
-              {/* Accent line appears with a tiny delay for polish */}
-              {!delay && (
-                <motion.div
-                  className="w-full h-1 bg-primary"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: 1 }}
-                  style={{ transformOrigin: "left" }}
-                />
-              )}              
-            </div>
-            {/* Subcopy */}
+                {/* Accent line appears with a tiny delay for polish */}
+                {!delay && (
+                  <motion.div
+                    className="w-full h-1 bg-primary"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 1 }}
+                    style={{ transformOrigin: "left" }}
+                  />
+                )}
+                <div className="justify-end gap-12 text-lg mt-3 flex xl:hidden">
+                  <p className="text-text">Prefer direct mail?</p>
+                  <a
+                    href={"mailito:hello@gmail.com"}
+                    className="text-secondary hover:underline"
+                  >
+                    hello@gmail.com
+                  </a>
+                </div>
+              </div>
+              {/* Subcopy */}
               <motion.div
-                className="mt-8 max-w-md text-sm text-muted-foreground"
+                className="mt-8 max-w-md text-xl text-text/50"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15, duration: 0.25 }}
@@ -117,33 +135,54 @@ export default function ContactPage() {
                 <p>In which role do you see me?</p>
                 <p>Do you require me to work locally or remote?</p>
               </motion.div>
+            </div>
+            <div className="hidden xl:flex flex-col gap-6">
+              <div className="w-64 h-0.5 bg-white/30" />
+              <div className="flex gap-12 text-lg">
+                <p className="text-text">Prefer direct mail?</p>
+                <a
+                  href={"mailito:hello@gmail.com"}
+                  className="text-secondary hover:underline"
+                >
+                  hello@gmail.com
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* RIGHT column (form placeholder — next step we’ll add conditional reveal) */}
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-between pt-0 xl:pt-53">
             <motion.div
               className="w-full"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.25 }}
             >
-                <div className="relative">
-                    <div className="text-sm text-muted-foreground mb-2">
-                        Why don’t we start with your name?
-                    </div>
-                    <input
-                        type="text"
-                        placeholder="Type your name"
-                        className="w-full border-0 px-4 py-3 outline-none focus:border-primary focus:ring-0 text-4xl md:text-6xl placeholder-text/40"
-                        onInput={() => setIsCaret(true)}
-                    />
-                    {!isCaret && <span className="absolute left-4 top-[76px] -translate-y-1/2 h-[4.5rem] w-[1px] bg-text animate-caret pointer-events-none" />}
-
+              <div className="relative">
+                <div className="text-xl text-text mb-2">
+                  Why don’t we start with your name?
                 </div>
-              
+                <input
+                  type="text"
+                  placeholder="Type your name"
+                  className="w-full border-0 px-4 py-3 outline-none focus:text-primary text-primary focus:ring-0 text-4xl md:text-6xl placeholder-text/40"
+                  onInput={(e) => {
+                    setIsCaret(true);
+                    const value = (e.target as HTMLInputElement).value;
+                    value.length > 2 ? setIsVisible(true) : setIsVisible(false);
+                  }}
+                />
+                {!isCaret && (
+                  <span className="absolute left-4 top-[68px] md:top-[85px] -translate-y-1/2 h-[2.5rem] md:h-[4.5rem] w-[1px] bg-text animate-caret pointer-events-none" />
+                )}
+              </div>
 
               {/* Next step: make these conditional with AnimatePresence based on name state */}
-              <div className="opacity-40 mt-6 space-y-4 pointer-events-none select-none">
+              <div
+                className={`opacity-40 mt-6 space-y-4 pointer-events-none select-none ${
+                  !isVisible && "hidden"
+                }`}
+              >
                 <input
                   type="email"
                   placeholder="Your E-Mail Address"
@@ -162,6 +201,6 @@ export default function ContactPage() {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 }

@@ -36,7 +36,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} font-roboto antialiased bg-background`}
       >
         <HeaderLogo />
-        <Navigation />        
+        <Navigation />
         {children}
       </body>
     </html>

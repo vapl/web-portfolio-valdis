@@ -1,6 +1,5 @@
 "use client";
 import HeroShrinkingCover from "../hero-covers/HeroShrinkingCover";
-import SideToc from "./SideToc";
 
 type TocItem = { id: string; label: string };
 
@@ -20,7 +19,7 @@ type LayoutProps = {
 
 export const CaseStudyLayout = ({ meta, children }: LayoutProps) => {
   return (
-    <main className="min-h-screen text-text bg-background ">
+    <main className="min-h-screen text-text bg-background overflow-hidden">
       <HeroShrinkingCover
         imageSrc={meta.cover}
         title={meta.title}

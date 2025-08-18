@@ -72,27 +72,25 @@ export default function HeaderLogo() {
 
   return (
     <>
-    <button
-      aria-label={isHome ? "Home" : "Back"}
-      onClick={onClick}
-      className="fixed left-3 md:left-7 top-12 z-[999] h-10 w-10 cursor-pointer"
-    >
-      {/* One SVG, two paths (match your original two fills) */}
-      <svg
-        viewBox="0 0 1000 900"
-        width={50}
-        height={50}
-        role="img"
-        className="block"
+      <button
+        aria-label={isHome ? "Home" : "Back"}
+        onClick={onClick}
+        className="fixed left-3 md:left-7 top-12 z-[999] h-10 w-10 cursor-pointer"
       >
-        {/* Dark part */}
-        <path d={dA} fill={isHome ? "#b45309" : "#d97706"} />
-        {/* Light part */}
-        <path d={dB} fill="#d97706" />
-      </svg>
-    </button>
-
-    
+        {/* One SVG, two paths (match your original two fills) */}
+        <svg
+          viewBox="0 0 1000 900"
+          width={isHome ? 50 : 40}
+          height={isHome ? 50 : 40}
+          role="img"
+          className="block"
+        >
+          {/* Dark part */}
+          <path d={dA} fill={isHome ? "#b45309" : "#d97706"} />
+          {/* Light part */}
+          <path d={dB} fill="#d97706" />
+        </svg>
+      </button>
     </>
   );
 }

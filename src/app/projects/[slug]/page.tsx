@@ -17,19 +17,7 @@ export const ProjectPage = async ({ params }: { params: { slug: string } }) => {
     options: { parseFrontmatter: false },
   });
 
-  return (
-    <CaseStudyLayout
-      meta={meta}
-      toc={[
-        { id: "overview", label: "Overview" },
-        { id: "problem", label: "Problem" },
-        { id: "solution", label: "Solution" },
-        { id: "results", label: "Results" },
-      ]}
-    >
-      {mdx.content}
-    </CaseStudyLayout>
-  );
+  return <CaseStudyLayout meta={meta}>{mdx.content}</CaseStudyLayout>;
 };
 
 export default ProjectPage;
