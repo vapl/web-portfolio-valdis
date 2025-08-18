@@ -71,7 +71,18 @@ export default function HeaderLogo() {
   };
 
   return (
-    <>
+    
+    <Link href="/" className="fixed left-7 top-6 z-[999]">
+      <Image
+        src={"images/logo/vv-logo_1.svg"}
+        alt="Logo"
+        width={32}
+        height={32}
+        priority
+        className="hover cursor-pointer"
+      />
+    </Link>
+
     <button
       aria-label={isHome ? "Home" : "Back"}
       onClick={onClick}
@@ -91,8 +102,6 @@ export default function HeaderLogo() {
         <path d={dB} fill="#d97706" />
       </svg>
     </button>
-
     
-    </>
   );
 }
