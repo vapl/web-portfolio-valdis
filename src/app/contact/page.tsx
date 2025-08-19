@@ -1,7 +1,9 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, resize } from "framer-motion";
+import { useDelay } from "@/hooks/useDelay";
 
 // Utility: split text into characters but keep spaces (NBSP)
 function splitText(text: string) {
@@ -15,6 +17,8 @@ export default function ContactPage() {
   const [isCaret, setIsCaret] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const title = "Let's talk";
+
+  const delay_1 = useDelay(900, []);
 
   // Close intro after 1.3s (adjust as needed)
   useEffect(() => {
@@ -40,7 +44,7 @@ export default function ContactPage() {
           <motion.div
             className="fixed inset-0 z-20 flex items-center justify-center"
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            exit={{ opacity: 1 }}
             transition={{ duration: 0.6 }} // slower fade-out so it's noticeable
           >
             <div className="text-center">
@@ -62,16 +66,19 @@ export default function ContactPage() {
                   </motion.span>
                 ))}
 
-                {/* Blinking caret */}
-                <motion.span
-                  aria-hidden="true"
-                  className="inline-block"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 1, 0] }}
-                  transition={{ duration: 0.9, repeat: Infinity }}
-                >
-                  <span className="ml-2 inline-block align-middle h-[0.9em] w-[3px] bg-primary" />
-                </motion.span>
+                {/* ellipsis */}
+                    <motion.span>
+                        {"...".split("").map((char, i) => (
+                            <motion.span
+                                key={i}
+                                className="inline-block"
+                                initial={{ opacity: 0, y: 6 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: title.length * 0.06 + 0.22 + i * 0.1, duration: 0.2 }}
+                                aria-hidden="true"
+                            >{char}</motion.span>
+                        ))}
+                    </motion.span>
               </motion.h1>
             </div>
           </motion.div>
@@ -102,6 +109,17 @@ export default function ContactPage() {
                   }}
                 >
                   {title}
+                  <motion.span>
+                    {"...".split("").map((char, i) => (
+                        <motion.span
+                            key={i}
+                            className="inline-block"
+                            initial={{ opacity: 0, y: 6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.16, duration: 0.22 }}
+                        >{char}</motion.span>
+                    ))}
+                  </motion.span>
                 </motion.h1>
 
                 {/* Accent line appears with a tiny delay for polish */}
@@ -117,7 +135,7 @@ export default function ContactPage() {
                 <div className="justify-end gap-12 text-lg mt-3 flex xl:hidden">
                   <p className="text-text">Prefer direct mail?</p>
                   <a
-                    href={"mailito:hello@gmail.com"}
+                    href="mailito:hello@gmail.com"
                     className="text-secondary hover:underline"
                   >
                     hello@gmail.com
@@ -159,9 +177,15 @@ export default function ContactPage() {
               transition={{ delay: 0.2, duration: 0.25 }}
             >
               <div className="relative">
-                <div className="text-xl text-text mb-2">
+                <motion.div 
+                    className="text-xl text-text mb-2 px-4"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 1 }}
+                    style={{ transformOrigin: "left" }}
+                >
                   Why don’t we start with your name?
-                </div>
+                </motion.div>
                 <input
                   type="text"
                   placeholder="Type your name"
@@ -178,25 +202,48 @@ export default function ContactPage() {
               </div>
 
               {/* Next step: make these conditional with AnimatePresence based on name state */}
-              <div
-                className={`opacity-40 mt-6 space-y-4 pointer-events-none select-none ${
-                  !isVisible && "hidden"
-                }`}
+              
+              {isVisible && <div
+                className={`mt-6 space-y-16`}
               >
-                <input
-                  type="email"
-                  placeholder="Your E-Mail Address"
-                  className="w-full border rounded-xl px-4 py-3"
-                />
-                <textarea
-                  placeholder="Tell me about you and the world"
-                  rows={4}
-                  className="w-full border rounded-xl px-4 py-3"
-                />
-                <button className="inline-flex items-center gap-2 rounded-xl bg-primary text-white px-5 py-3">
+                <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 1, y: 0}}
+                    transition={{ delay: 0.5, duration: 0.65 }}
+                >
+                    <span className="flex px-4 outline-none text-xl font-light text-primary">Your e-mail</span>
+                    <input
+                        type="email"
+                        placeholder="Your E-Mail Address"
+                        className="w-full border-0 px-4 py-3 outline-none focus:text-text text-text focus:ring-0 text-xl placeholder-text/40"
+                    />
+                </motion.div>
+                
+                <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 1, y: 0}}
+                    transition={{ delay: 0.5, duration: 0.65 }}
+                >
+                <span className="flex px-4 font-light outline-none text-xl text-primary">What's is on your mind?</span>
+                    <textarea
+                    placeholder="Tell me about you and the world"
+                    rows={4}
+                    {...{resize: "true"}}
+                    className="w-full border-0 px-4 py-3 outline-none focus:text-text text-text focus:ring-0 text-xl placeholder-text/40"
+                    />
+                </motion.div>
+                <motion.button 
+                    className="inline-flex items-center gap-2 rounded-xl bg-primary text-white px-5 py-3"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9, duration: 0.65 }}
+                >
                   Get in touch!
-                </button>
+                </motion.button>
               </div>
+                }
             </motion.div>
           </div>
         </div>
