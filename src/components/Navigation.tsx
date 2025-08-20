@@ -2,26 +2,30 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navigation() {
   const [AboutHovered, setAboutHovered] = useState(false);
   const [ContactsHovered, setContactsHovered] = useState(false);
+  const pathName = usePathname();
 
   return (
     <>
       {/* About (left) */}
-      <div className="fixed left-5 md:left-9 top-1/2 -translate-y-1/2 block cursor-pointer z-[999]">
+      <div 
+        className="fixed left-0 w-8 md:w-11 top-1/2 -translate-y-1/2 flex justify-end cursor-pointer z-[999]"
+        onMouseEnter={() => setAboutHovered(true)}
+        onMouseLeave={() => setAboutHovered(false)}
+      >
         <Link
           href={"/about"}
           className={`group flex flex-col items-center tracking-[0.25em] text-text/80`}
-          onMouseEnter={() => setAboutHovered(true)}
-          onMouseLeave={() => setAboutHovered(false)}
         >
           {"ABOUT".split("").map((ch, i) => (
             <span
               key={i}
               className={`transition-all duration-300 ${
-                AboutHovered ? "text-[#d97706]" : "text-text/80"
+                AboutHovered || pathName === "/about"  ? "text-[#d97706] font-bold" : "text-text/80"
               }`}
               style={{
                 transitionDelay: AboutHovered ? `${i * 80}ms` : "0ms",
@@ -36,7 +40,7 @@ export default function Navigation() {
 
       {/* Contact (right) */}
       <div 
-        className="fixed W-16 right-5 md:right-9 top-1/2 -translate-y-1/2 block cursor-pointer z-[999]"
+        className="fixed right-0 w-8 md:w-11 top-1/2 -translate-y-1/2 flex justify-start cursor-pointer z-[999]"
         onMouseEnter={() => setContactsHovered(true)}
         onMouseLeave={() => setContactsHovered(false)}
       >
@@ -47,8 +51,8 @@ export default function Navigation() {
           {"CONTACT".split("").map((ch, i) => (
             <span
               key={i}
-              className={`transition-all duration-300 ${
-                ContactsHovered ? "text-[#d97706]" : "text-text/80"
+              className={`transition-all duration-150 ${
+                ContactsHovered || pathName === "/contact" ? "text-[#d97706] font-bold" : "text-text/80"
               }`}
               style={{
                 transitionDelay: ContactsHovered ? `${i * 80}ms` : "0ms",

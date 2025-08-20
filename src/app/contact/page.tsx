@@ -13,7 +13,7 @@ export default function ContactPage() {
   const [intro, setIntro] = useState(true); // intro overlay is visible
   const [showMain, setShowMain] = useState(false); // render main only after intro exit
   const [delay, setDelay] = useState(true); // small delay for accent line
-  const [isCaret, setIsCaret] = useState(false);
+  const [isCaret, setIsCaret] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,6 +27,7 @@ export default function ContactPage() {
     "idle" | "sending" | "ok" | "error"
   >("idle")
   const [touched, setTouched] = useState<{ email?: boolean }>({});
+  const maxChar = 2000;
   const title = "Let's talk";
 
   // Helper: client-side quck checks (optional; server still validates)
@@ -84,6 +85,7 @@ export default function ContactPage() {
     function isValidEmail(v: string) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
     }
+
 
   /** Handle form */
 
@@ -253,17 +255,19 @@ export default function ContactPage() {
                   className="w-full border-0 py-3 outline-none focus:text-primary text-primary focus:ring-0 text-4xl md:text-6xl placeholder-text/40"
                   value={name}
                   onInput={(e) => {
-                    setIsCaret(true);
+                    setIsCaret(false);
                     const v = (e.target as HTMLInputElement).value;
                     const fixed = v.length ? v[0].toUpperCase() + v.slice(1) : v;
                     setName(fixed);
                     setIsVisible(fixed.trim().length > 2);
-                  }}                 
+                  }}
+                  onBlur={() => setIsCaret(name === "")}              
                   aria-invalid={!!errors.name}
                   aria-describedby="name-error"
                 />
-                {!isCaret && (
-                  <span className="absolute left-0 top-[68px] md:top-[85px] -translate-y-1/2 h-[2.5rem] md:h-[4.5rem] w-[1px] bg-text animate-caret pointer-events-none" />
+                {isCaret && (
+                  <span                    
+                    className="absolute left-0 top-[68px] md:top-[85px] -translate-y-1/2 h-[2.5rem] md:h-[4.5rem] w-[1px] bg-text animate-caret pointer-events-none" />
                 )}
                 {errors.name && (
                     <p id="name-error" className="mt-2 px-1 text-sm text-red-400">
@@ -297,7 +301,7 @@ export default function ContactPage() {
                             // clear or set error live
                             setErrors((prev) => ({
                             ...prev,
-                            email: v.length === 0
+                            email: v.length < 1
                                 ? prev.email // don't show "invalid" while empty; leave as-is
                                 : isValidEmail(v) ? undefined : ["Please enter a valid email"],
                             }));
@@ -307,7 +311,7 @@ export default function ContactPage() {
                             // on blur, if empty or invalid -> show error
                             setErrors((prev) => ({
                             ...prev,
-                            email: email.length < 3
+                            email: email.length === 0
                                 ? ["Email is required"]
                                 : isValidEmail(email)
                                 ? undefined
@@ -318,7 +322,7 @@ export default function ContactPage() {
                         aria-invalid={!!errors.email}
                         aria-describedby="email-error"
                       />
-                      {errors.email && (
+                      {(touched.email || errors.email) && errors.email && (
                             <p id="email-error" className="mt-2 px-1 text-sm text-red-400">
                                 {errors.email[0]}
                             </p>
@@ -334,11 +338,37 @@ export default function ContactPage() {
                       <span className="flex font-light outline-none text-xl text-primary">
                         your message
                       </span>
+
+                      {/* Character counter */}
+                      <p className="mt-1 text-sm text-text/60 text-right">
+                        {message.trim().length} /2000
+                      </p>
                       <textarea
                         placeholder="What are you working on?"
                         rows={4}
+                        maxLength={2000}
                         value={message}
-                        onChange={(e) => setMessage(e.target.value)}
+                        onChange={(e) => {
+                            const m = e.target.value
+                            setMessage(m)
+                            // clear or set error live
+                            setErrors((prev) => ({
+                            ...prev,
+                            message: m.trim().length < 10
+                                ? ["Message should be at least 10 characters."]
+                                : [""],
+                            }));
+                        }}
+                        onBlur={() => {
+                            setTouched((t) => ({ ...t, message: true }));
+                            // on blur, if empty or invalid -> show error
+                            setErrors((prev) => ({
+                            ...prev,
+                            message: message.trim().length < 10
+                                ? ["Message should be at least 10 characters."]
+                                : [""],
+                            }));
+                        }}
                         {...{ resize: "true" }}
                         className="w-full border-0 py-3 outline-none focus:text-text text-text focus:ring-0 text-xl placeholder-text/40"
                         aria-invalid={!!errors.message}
