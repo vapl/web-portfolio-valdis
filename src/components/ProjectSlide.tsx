@@ -1,4 +1,5 @@
 "use client";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -99,14 +100,21 @@ export default function ProjectSlide({
         </div>
         {/* button */}
         <div className="flex items-center">
-          <Link
-            href={`/projects/${slug}`}
-            className="rounded-xl border-2 border-primary px-6 py-3 text-md text-primary hover:text-foreground/90 hover:bg-primary transition"
-            onMouseEnter={() => onPauseChange(true)}
-            onMouseLeave={() => onPauseChange(false)}
+          <motion.div
+            className="rounded-xl border-2 border-primary px-6 py-3 text-md text-primary hover:text-foreground/90 hover:bg-primary transition cursor-pointer"
+            initial={{ opacity: 0, scale: 0.5, x: "0vw", y: "-30vh" }} // no ekrāna vidus
+            animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.6 }}
           >
-            Go to Project
-          </Link>
+            <Link href={`/projects/${slug}`}>
+              Go to Project
+            </Link>
+          </motion.div>
+
+
+          
         </div>
       </div>
     </div>

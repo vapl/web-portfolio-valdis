@@ -371,13 +371,21 @@ export default function ContactPage() {
                       </p>
 
                         {/* Submit */}
-                      <button 
+                      <motion.button
                         type="submit"
                         disabled={status === "sending"}
-                        className="inline-flex items-center gap-2 rounded-xl bg-primary text-white px-5 py-3"
-                      >
+                        className={`
+                            inline-flex items-center gap-2 rounded-xl px-5 py-3 
+                            text-text
+                            ${status === "sending" ? "bg-primary/70 cursor-wait" : "bg-primary hover:bg-primary/90 cursor-pointer"}
+                        `}
+                        whileHover={{ scale: status === "sending" ? 1 : 1.05 }}
+                        whileTap={{ scale: status === "sending" ? 1 : 0.95 }}
+                        animate={status === "sending" ? { opacity: [1, 0.7, 1], scale: [1, 1.03, 1] } : {}}
+                        transition={{ duration: 0.6, repeat: status === "sending" ? Infinity : 0 }}
+                        >
                         {status === "sending" ? "Sending..." : "Get in touch!"}
-                      </button>
+                      </motion.button>
 
                       {/* Global feedback */}
                       {status === "ok" && (
