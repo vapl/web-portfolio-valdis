@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import Spinner from "@/components/ui/Spinner";
 
 // Utility: split text into characters but keep spaces (NBSP)
 function splitText(text: string) {
@@ -23,19 +25,21 @@ export default function ContactPage() {
     email?: string[];
     message?: string[];
   }>({});
-  const [status, setStatus] = useState<
-    "idle" | "sending" | "ok" | "error"
-  >("idle")
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">(
+    "idle"
+  );
   const [touched, setTouched] = useState<{ email?: boolean }>({});
-  const maxChar = 2000;
   const title = "Let's talk";
 
   // Helper: client-side quck checks (optional; server still validates)
   function validateClient() {
     const e: typeof errors = {};
-    if (name.trim().length < 3) e.name = ["Name must be at least 3 characters."];
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = ["Please enter a valid email"];
-    if (message.trim().length < 10) e.message = ["Message should be at least 10 characters."];
+    if (name.trim().length < 3)
+      e.name = ["Name must be at least 3 characters."];
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      e.email = ["Please enter a valid email"];
+    if (message.trim().length < 10)
+      e.message = ["Message should be at least 10 characters."];
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -48,24 +52,24 @@ export default function ContactPage() {
     setStatus("sending");
     setErrors({});
     try {
-        const res = await fetch("api/contact", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, message, hp: "" }),
-        });
+      const res = await fetch("api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message, hp: "" }),
+      });
 
-        const json = await res.json();
+      const json = await res.json();
 
-        if(!res.ok) {
-            setErrors(json.error ?? {});
-            setStatus("error");
-            return;
-        }
-
-        setStatus("ok");
-        setMessage("");
-    } catch {
+      if (!res.ok) {
+        setErrors(json.error ?? {});
         setStatus("error");
+        return;
+      }
+
+      setStatus("ok");
+      setMessage("");
+    } catch {
+      setStatus("error");
     }
   }
 
@@ -82,10 +86,9 @@ export default function ContactPage() {
     return () => clearTimeout(t);
   }, [showMain]);
 
-    function isValidEmail(v: string) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-    }
-
+  function isValidEmail(v: string) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
 
   /** Handle form */
 
@@ -170,10 +173,7 @@ export default function ContactPage() {
                   {title}
                   <motion.span>
                     {"...".split("").map((char, i) => (
-                      <span
-                        key={i}
-                        className="inline-block"
-                      >
+                      <span key={i} className="inline-block">
                         {char}
                       </span>
                     ))}
@@ -257,22 +257,24 @@ export default function ContactPage() {
                   onInput={(e) => {
                     setIsCaret(false);
                     const v = (e.target as HTMLInputElement).value;
-                    const fixed = v.length ? v[0].toUpperCase() + v.slice(1) : v;
+                    const fixed = v.length
+                      ? v[0].toUpperCase() + v.slice(1)
+                      : v;
                     setName(fixed);
                     setIsVisible(fixed.trim().length > 2);
                   }}
-                  onBlur={() => setIsCaret(name === "")}              
+                  onFocus={() => setIsCaret(false)}
+                  onBlur={() => setIsCaret(name === "")}
                   aria-invalid={!!errors.name}
                   aria-describedby="name-error"
                 />
                 {isCaret && (
-                  <span                    
-                    className="absolute left-0 top-[68px] md:top-[85px] -translate-y-1/2 h-[2.5rem] md:h-[4.5rem] w-[1px] bg-text animate-caret pointer-events-none" />
+                  <span className="absolute left-0 top-[68px] md:top-[85px] -translate-y-1/2 h-[2.5rem] md:h-[4.5rem] w-[1px] bg-text animate-caret pointer-events-none" />
                 )}
                 {errors.name && (
-                    <p id="name-error" className="mt-2 px-1 text-sm text-red-400">
-                        {errors.name[0]}
-                    </p>
+                  <p id="name-error" className="mt-2 px-1 text-sm text-red-400">
+                    {errors.name[0]}
+                  </p>
                 )}
               </div>
 
@@ -280,7 +282,7 @@ export default function ContactPage() {
 
               <AnimatePresence mode="wait">
                 {isVisible && (
-                  <div className={`mt-6 space-y-8`}>
+                  <div className={`mt-6 space-y-4`}>
                     <motion.div
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -295,38 +297,40 @@ export default function ContactPage() {
                         placeholder="Where can I reach you?"
                         value={email}
                         onChange={(e) => {
-                            const v = e.target.value;
-                            setEmail(v);
+                          const v = e.target.value;
+                          setEmail(v);
 
-                            // clear or set error live
-                            setErrors((prev) => ({
+                          // clear or set error live
+                          setErrors((prev) => ({
                             ...prev,
-                            email: v.length < 1
-                                ? prev.email // don't show "invalid" while empty; leave as-is
-                                : isValidEmail(v) ? undefined : ["Please enter a valid email"],
-                            }));
+                            email: isValidEmail(v) ? undefined : [""],
+                          }));
                         }}
-                         onBlur={() => {
-                            setTouched((t) => ({ ...t, email: true }));
-                            // on blur, if empty or invalid -> show error
-                            setErrors((prev) => ({
+                        onBlur={() => {
+                          setTouched((t) => ({ ...t, email: true }));
+                          // on blur, if empty or invalid -> show error
+                          setErrors((prev) => ({
                             ...prev,
-                            email: email.length === 0
+                            email:
+                              email.length === 0
                                 ? ["Email is required"]
                                 : isValidEmail(email)
                                 ? undefined
                                 : ["Please enter a valid email"],
-                            }));
+                          }));
                         }}
                         className="w-full border-0 py-3 outline-none focus:text-text text-text focus:ring-0 text-xl placeholder-text/40"
                         aria-invalid={!!errors.email}
                         aria-describedby="email-error"
                       />
-                      {(touched.email || errors.email) && errors.email && (
-                            <p id="email-error" className="mt-2 px-1 text-sm text-red-400">
-                                {errors.email[0]}
-                            </p>
-                        )}
+                      <p
+                        id="email-error"
+                        className="flex h-4 px-1 text-sm text-red-400"
+                      >
+                        {(touched.email || errors.email) &&
+                          errors.email &&
+                          errors.email[0]}
+                      </p>
                     </motion.div>
 
                     <motion.div
@@ -335,50 +339,53 @@ export default function ContactPage() {
                       exit={{ opacity: 0, y: -12 }}
                       transition={{ delay: 0.5, duration: 0.85 }}
                     >
-                      <span className="flex font-light outline-none text-xl text-primary">
+                      <span className="flex justify-between items-end font-light outline-none text-xl text-primary">
                         your message
+                        {message.trim() && (
+                          <p className="mt-1 text-sm text-text/60 text-right">
+                            {message.trim().length} /2000
+                          </p>
+                        )}
                       </span>
 
                       {/* Character counter */}
-                      <p className="mt-1 text-sm text-text/60 text-right">
-                        {message.trim().length} /2000
-                      </p>
                       <textarea
                         placeholder="What are you working on?"
                         rows={4}
                         maxLength={2000}
                         value={message}
                         onChange={(e) => {
-                            const m = e.target.value
-                            setMessage(m)
-                            // clear or set error live
-                            setErrors((prev) => ({
+                          const m = e.target.value;
+                          setMessage(m);
+                          // clear or set error live
+                          setErrors((prev) => ({
                             ...prev,
-                            message: m.trim().length < 10
-                                ? ["Message should be at least 10 characters."]
-                                : [""],
-                            }));
+                            message: m.trim().length > 10 ? [""] : [""],
+                          }));
                         }}
                         onBlur={() => {
-                            setTouched((t) => ({ ...t, message: true }));
-                            // on blur, if empty or invalid -> show error
-                            setErrors((prev) => ({
+                          setTouched((t) => ({ ...t, message: true }));
+                          // on blur, if empty or invalid -> show error
+                          setErrors((prev) => ({
                             ...prev,
-                            message: message.trim().length < 10
+                            message:
+                              message.trim().length < 10
                                 ? ["Message should be at least 10 characters."]
                                 : [""],
-                            }));
+                          }));
                         }}
                         {...{ resize: "true" }}
                         className="w-full border-0 py-3 outline-none focus:text-text text-text focus:ring-0 text-xl placeholder-text/40"
                         aria-invalid={!!errors.message}
                         aria-describedby="message-error"
                       />
-                      {errors.message && (
-                            <p id="message-error" className="mt-2 px-1 text-sm text-red-400">
-                                {errors.message[0]}
-                            </p>
-                        )}
+
+                      <p
+                        id="message-error"
+                        className="flex h-4 px-1 text-sm text-red-400"
+                      >
+                        {errors.message && errors.message[0]}
+                      </p>
                     </motion.div>
 
                     <motion.div
@@ -388,7 +395,7 @@ export default function ContactPage() {
                       exit={{ opacity: 0, y: -12 }}
                       transition={{ delay: 0.6, duration: 0.85 }}
                     >
-                        {/* GDPR note */}
+                      {/* GDPR note */}
                       <p className="text-sm text-text/80 font-light mb-2">
                         I will only use your information to respond to your
                         message.{" "}
@@ -400,30 +407,66 @@ export default function ContactPage() {
                         </Link>
                       </p>
 
-                        {/* Submit */}
+                      {/* Submit */}
                       <motion.button
                         type="submit"
                         disabled={status === "sending"}
                         className={`
-                            inline-flex items-center gap-2 rounded-xl px-5 py-3 
+                            flex items-center justify-center gap-2 rounded-xl px-5 py-3 
                             text-text
-                            ${status === "sending" ? "bg-primary/70 cursor-wait" : "bg-primary hover:bg-primary/90 cursor-pointer"}
+                            ${
+                              status === "sending"
+                                ? "bg-primary/70 cursor-wait"
+                                : "bg-primary hover:bg-primary/90 cursor-pointer"
+                            }
                         `}
                         whileHover={{ scale: status === "sending" ? 1 : 1.05 }}
                         whileTap={{ scale: status === "sending" ? 1 : 0.95 }}
-                        animate={status === "sending" ? { opacity: [1, 0.7, 1], scale: [1, 1.03, 1] } : {}}
-                        transition={{ duration: 0.6, repeat: status === "sending" ? Infinity : 0 }}
-                        >
-                        {status === "sending" ? "Sending..." : "Get in touch!"}
+                        animate={
+                          status === "sending"
+                            ? { opacity: [1, 0.7, 1], scale: [1, 1.03, 1] }
+                            : {}
+                        }
+                        transition={{
+                          duration: 0.6,
+                          repeat: status === "sending" ? Infinity : 0,
+                        }}
+                      >
+                        <PaperAirplaneIcon
+                          height={30}
+                          className={`relative -top-1 -rotate-40 animate-ping opacity-85 ${
+                            status === "sending" && "hidden"
+                          }`}
+                        />
+                        {status === "sending" && (
+                          <Spinner size={24} className="relative top-0.5" />
+                        )}
+                        <span>
+                          {status === "sending"
+                            ? "Sending..."
+                            : "Get in touch!"}
+                        </span>
                       </motion.button>
 
                       {/* Global feedback */}
-                      {status === "ok" && (
-                        <p role="status" className="text-sm mt-4 text-green-400">Thanks! I&apos;ll get back to you soon.</p>
-                      )}
-                      {status === "error" && (
-                        <p role="status" className="text-sm mt-4 text-red-400">Couldn&apos;t send right now. Please try again.</p>
-                      )}
+                      <div className="flex h-8">
+                        {status === "ok" && (
+                          <p
+                            role="status"
+                            className="flex justify-center text-sm mt-4 text-green-400"
+                          >
+                            Thanks! I&apos;ll get back to you soon.
+                          </p>
+                        )}
+                        {status === "error" && (
+                          <p
+                            role="status"
+                            className="flex justify-start items-start text-sm mt-4 text-red-400"
+                          >
+                            Couldn&apos;t send right now. Please try again.
+                          </p>
+                        )}
+                      </div>
                     </motion.div>
                   </div>
                 )}
