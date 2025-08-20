@@ -1,9 +1,7 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, resize } from "framer-motion";
-import { useDelay } from "@/hooks/useDelay";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 
 // Utility: split text into characters but keep spaces (NBSP)
@@ -17,7 +15,58 @@ export default function ContactPage() {
   const [delay, setDelay] = useState(true); // small delay for accent line
   const [isCaret, setIsCaret] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<{
+    name?: string[];
+    email?: string[];
+    message?: string[];
+  }>({});
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "ok" | "error"
+  >("idle")
+  const [touched, setTouched] = useState<{ email?: boolean }>({});
   const title = "Let's talk";
+
+  // Helper: client-side quck checks (optional; server still validates)
+  function validateClient() {
+    const e: typeof errors = {};
+    if (name.trim().length < 3) e.name = ["Name must be at least 3 characters."];
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = ["Please enter a valid email"];
+    if (message.trim().length < 10) e.message = ["Message should be at least 10 characters."];
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  }
+
+  // onSubmit handler
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (!validateClient()) return;
+    setStatus("sending");
+    setErrors({});
+    try {
+        const res = await fetch("api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, message, hp: "" }),
+        });
+
+        const json = await res.json();
+
+        if(!res.ok) {
+            setErrors(json.error ?? {});
+            setStatus("error");
+            return;
+        }
+
+        setStatus("ok");
+        setMessage("");
+    } catch {
+        setStatus("error");
+    }
+  }
 
   // Close intro after 1.3s (adjust as needed)
   useEffect(() => {
@@ -31,6 +80,12 @@ export default function ContactPage() {
     const t = setTimeout(() => setDelay(false), 900);
     return () => clearTimeout(t);
   }, [showMain]);
+
+    function isValidEmail(v: string) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+  /** Handle form */
 
   return (
     <main className="relative w-full min-h-screen bg-background">
@@ -113,15 +168,12 @@ export default function ContactPage() {
                   {title}
                   <motion.span>
                     {"...".split("").map((char, i) => (
-                      <motion.span
+                      <span
                         key={i}
                         className="inline-block"
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.16, duration: 0.22 }}
                       >
                         {char}
-                      </motion.span>
+                      </span>
                     ))}
                   </motion.span>
                 </motion.h1>
@@ -139,7 +191,7 @@ export default function ContactPage() {
                 <div className="justify-end gap-12 text-lg mt-3 flex xl:hidden">
                   <p className="text-text">Prefer direct mail?</p>
                   <a
-                    href="mailito:hello@gmail.com"
+                    href="mailto:hello@gmail.com"
                     className="text-secondary hover:underline"
                   >
                     hello@gmail.com
@@ -167,7 +219,7 @@ export default function ContactPage() {
               <div className="flex gap-12 text-lg">
                 <p className="text-text">Prefer direct mail?</p>
                 <a
-                  href={"mailito:hello@gmail.com"}
+                  href={"mailto:hello@gmail.com"}
                   className="text-secondary hover:underline"
                 >
                   hello@gmail.com
@@ -178,7 +230,8 @@ export default function ContactPage() {
 
           {/* RIGHT column (form placeholder — next step we’ll add conditional reveal) */}
           <div className="flex flex-col items-start justify-start pt-6 pb-18 xl:pt-53">
-            <motion.div
+            <motion.form
+              onSubmit={onSubmit}
               className="w-full"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -198,14 +251,24 @@ export default function ContactPage() {
                   type="text"
                   placeholder="Type your name"
                   className="w-full border-0 py-3 outline-none focus:text-primary text-primary focus:ring-0 text-4xl md:text-6xl placeholder-text/40"
+                  value={name}
                   onInput={(e) => {
                     setIsCaret(true);
-                    const value = (e.target as HTMLInputElement).value;
-                    value.length > 2 ? setIsVisible(true) : setIsVisible(false);
-                  }}
+                    const v = (e.target as HTMLInputElement).value;
+                    const fixed = v.length ? v[0].toUpperCase() + v.slice(1) : v;
+                    setName(fixed);
+                    setIsVisible(fixed.trim().length > 2);
+                  }}                 
+                  aria-invalid={!!errors.name}
+                  aria-describedby="name-error"
                 />
                 {!isCaret && (
                   <span className="absolute left-0 top-[68px] md:top-[85px] -translate-y-1/2 h-[2.5rem] md:h-[4.5rem] w-[1px] bg-text animate-caret pointer-events-none" />
+                )}
+                {errors.name && (
+                    <p id="name-error" className="mt-2 px-1 text-sm text-red-400">
+                        {errors.name[0]}
+                    </p>
                 )}
               </div>
 
@@ -226,8 +289,40 @@ export default function ContactPage() {
                       <input
                         type="email"
                         placeholder="Where can I reach you?"
+                        value={email}
+                        onChange={(e) => {
+                            const v = e.target.value;
+                            setEmail(v);
+
+                            // clear or set error live
+                            setErrors((prev) => ({
+                            ...prev,
+                            email: v.length === 0
+                                ? prev.email // don't show "invalid" while empty; leave as-is
+                                : isValidEmail(v) ? undefined : ["Please enter a valid email"],
+                            }));
+                        }}
+                         onBlur={() => {
+                            setTouched((t) => ({ ...t, email: true }));
+                            // on blur, if empty or invalid -> show error
+                            setErrors((prev) => ({
+                            ...prev,
+                            email: email.length < 3
+                                ? ["Email is required"]
+                                : isValidEmail(email)
+                                ? undefined
+                                : ["Please enter a valid email"],
+                            }));
+                        }}
                         className="w-full border-0 py-3 outline-none focus:text-text text-text focus:ring-0 text-xl placeholder-text/40"
+                        aria-invalid={!!errors.email}
+                        aria-describedby="email-error"
                       />
+                      {errors.email && (
+                            <p id="email-error" className="mt-2 px-1 text-sm text-red-400">
+                                {errors.email[0]}
+                            </p>
+                        )}
                     </motion.div>
 
                     <motion.div
@@ -242,9 +337,18 @@ export default function ContactPage() {
                       <textarea
                         placeholder="What are you working on?"
                         rows={4}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
                         {...{ resize: "true" }}
                         className="w-full border-0 py-3 outline-none focus:text-text text-text focus:ring-0 text-xl placeholder-text/40"
+                        aria-invalid={!!errors.message}
+                        aria-describedby="message-error"
                       />
+                      {errors.message && (
+                            <p id="message-error" className="mt-2 px-1 text-sm text-red-400">
+                                {errors.message[0]}
+                            </p>
+                        )}
                     </motion.div>
 
                     <motion.div
@@ -254,6 +358,7 @@ export default function ContactPage() {
                       exit={{ opacity: 0, y: -12 }}
                       transition={{ delay: 0.6, duration: 0.85 }}
                     >
+                        {/* GDPR note */}
                       <p className="text-sm text-text/80 font-light mb-2">
                         I will only use your information to respond to your
                         message.{" "}
@@ -265,14 +370,27 @@ export default function ContactPage() {
                         </Link>
                       </p>
 
-                      <button className="inline-flex items-center gap-2 rounded-xl bg-primary text-white px-5 py-3">
-                        Get in touch!
+                        {/* Submit */}
+                      <button 
+                        type="submit"
+                        disabled={status === "sending"}
+                        className="inline-flex items-center gap-2 rounded-xl bg-primary text-white px-5 py-3"
+                      >
+                        {status === "sending" ? "Sending..." : "Get in touch!"}
                       </button>
+
+                      {/* Global feedback */}
+                      {status === "ok" && (
+                        <p role="status" className="text-sm mt-4 text-green-400">Thanks! I&apos;ll get back to you soon.</p>
+                      )}
+                      {status === "error" && (
+                        <p role="status" className="text-sm mt-4 text-red-400">Couldn&apos;t send right now. Please try again.</p>
+                      )}
                     </motion.div>
                   </div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </motion.form>
           </div>
         </div>
       )}
