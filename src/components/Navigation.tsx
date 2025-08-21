@@ -12,58 +12,64 @@ export default function Navigation() {
   return (
     <>
       {/* About (left) */}
+      <Link
+          href={pathName === "about" ? "" : "/about"}
+        >
       <div 
         className="fixed left-0 w-8 md:w-11 top-1/2 -translate-y-1/2 flex justify-end cursor-pointer z-[999]"
         onMouseEnter={() => setAboutHovered(true)}
         onMouseLeave={() => setAboutHovered(false)}
       >
-        <Link
-          href={"/about"}
+        <div
           className={`group flex flex-col items-center tracking-[0.25em] text-text/80`}
         >
           {"ABOUT".split("").map((ch, i) => (
             <span
               key={i}
               className={`transition-all duration-300 ${
-                AboutHovered || pathName === "/about"  ? "text-[#d97706] font-bold" : "text-text/80"
+                AboutHovered || pathName === "/about"  ? "text-[#d97706] font-extrabold" : "text-text/80"
               }`}
               style={{
-                transitionDelay: AboutHovered ? `${i * 80}ms` : "0ms",
-                marginTop: AboutHovered && i !== 0 ? "0.5rem" : "0.25rem",
+                transitionDelay: AboutHovered ? `${i * 50}ms` : "0ms",
+                marginTop: AboutHovered || pathName === "about" && i !== 0 ? "0.25rem" : "0.15rem",
               }}
             >
               {ch}
             </span>
           ))}
-        </Link>
+        </div>
       </div>
+      </Link>
 
       {/* Contact (right) */}
+      <Link
+          href={ pathName === "/contact" ? "" : "/contact"}
+        >
       <div 
-        className="fixed right-0 w-8 md:w-11 top-1/2 -translate-y-1/2 flex justify-start cursor-pointer z-[999]"
+        className={`fixed right-0 w-8 md:w-11 top-1/2 -translate-y-1/2 flex justify-start ${ContactsHovered && pathName === "/contact" ? "cursor-auto" : "cursor-pointer"} z-[999]`}
         onMouseEnter={() => setContactsHovered(true)}
         onMouseLeave={() => setContactsHovered(false)}
       >
-        <Link
-          href={"/contact"}
-          className="group flex flex-col items-center tracking-[0.25em] text-text/80"
+        <div
+          className="group flex flex-col items-center text-text/80"
         >
           {"CONTACT".split("").map((ch, i) => (
             <span
               key={i}
               className={`transition-all duration-150 ${
-                ContactsHovered || pathName === "/contact" ? "text-[#d97706] font-bold" : "text-text/80"
+                ContactsHovered || pathName === "/contact" ? "text-[#d97706] font-extrabold" : "text-text/80"
               }`}
               style={{
-                transitionDelay: ContactsHovered ? `${i * 80}ms` : "0ms",
-                marginTop: ContactsHovered && i !== 0 ? "0.5rem" : "0.25rem",
+                transitionDelay: ContactsHovered ? `${i * 50}ms` : "0ms",
+                marginTop: (ContactsHovered || pathName === "/contact") && i !== 0 ? "0.25rem" : "0.15rem",
               }}
             >
               {ch}
             </span>
           ))}
-        </Link>
+        </div>
       </div>
+      </Link>
     </>
   );
 }
