@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import HeaderLogo from "@/components/HeaderLogo";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
+import LenisProvider from "@/components/LenisProvider";
 
 const geistSans = Geist({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -37,7 +38,7 @@ export default function RootLayout({
       >
         <HeaderLogo />
         <Navigation />
-        {children}
+        <LenisProvider>{children}</LenisProvider>
       </body>
     </html>
   );

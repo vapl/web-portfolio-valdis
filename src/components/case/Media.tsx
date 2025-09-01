@@ -136,7 +136,7 @@ const Media = ({ images }: { images: MediaItem[] }) => {
             alt={item.alt ?? ""}
             width={item.width ?? 1400}
             height={item.height ?? 900}
-            className="w-full h-auto object-cover"
+            className="w-full h-auto object-cover rounded-xl"
             priority={false}
           />
         );
