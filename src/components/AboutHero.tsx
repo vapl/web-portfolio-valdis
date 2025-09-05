@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
 /**
  * AboutHero
@@ -81,8 +82,11 @@ export default function AboutHero() {
           <div className="absolute inset-0 bg-black/70" />
           {/* the same centered letters for BOTH panels (relative to whole stage) */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <span className="select-none font-extrabold leading-none tracking-[-0.04em] text-white/30 text-[clamp(120px,22vw,320px)]">
-              V V
+            <span className="relative left-11 md:left-11 lg:left-16 xl:left-20 select-none font-extrabold leading-none text-primary/20 text-[clamp(220px,28vw,520px)]">
+              V
+            </span>
+            <span className="relative right-11 md:right-11 lg:right-16 xl:right-20 select-none font-extrabold leading-none text-white/30 text-[clamp(220px,28vw,520px)]">
+              V
             </span>
           </div>
         </motion.div>
@@ -97,9 +101,26 @@ export default function AboutHero() {
         >
           <div className="absolute inset-0 bg-black/70" />
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <span className="select-none font-extrabold leading-none tracking-[-0.04em] text-white/30 text-[clamp(120px,22vw,320px)]">
-              V V
+            <span className="relative left-11 md:left-11 lg:left-16 xl:left-20 select-none font-extrabold leading-none text-primary/20 text-[clamp(220px,28vw,520px)]">
+              V
             </span>
+            <span className="relative right-11 md:right-11 lg:right-16 xl:right-20 select-none font-extrabold leading-none text-white/30 text-[clamp(220px,28vw,520px)]">
+              V
+            </span>
+          </div>
+          {/* Social links */}
+          <div className="absolute bottom-0 w-full h-18">
+            <div className="flex gap-12 justify-center">
+              <a href="http://">
+                <FaLinkedin size={24} className="text-primary/30" />
+              </a>
+              <a href="http://">
+                <FaXTwitter size={24} className="text-primary/30" />
+              </a>
+              <a href="http://">
+                <FaGithub size={24} className="text-primary/30" />
+              </a>
+            </div>
           </div>
         </motion.div>
         <noscript />

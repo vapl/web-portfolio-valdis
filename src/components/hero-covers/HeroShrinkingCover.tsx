@@ -79,7 +79,7 @@ const HeroShrinkingCover = ({
   const textOpacity = useTransform(p, [0, 1], [1, 1]);
 
   // Title size transform
-  const titleSize = useTransform(p, [0, 1], ["8rem", "3.75rem"]);
+  const titleSize = useTransform(p, [0, 1], ["5rem", "3.75rem"]);
   const subtitleSize = useTransform(p, [0, 1], ["2rem", "1.2rem"]);
 
   // Delta from viewport center to container's left edge and bottom offset:
