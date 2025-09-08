@@ -1,5 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
+
 import AboutHero from "@/components/AboutHero";
 import FeaturedWorkCard from "@/components/FeaturedWorkCard";
+import HorizontalTextScroll from "@/components/HorizontalTextScroll";
+import SectionTitle from "@/components/SectionTitle";
+import Button from "@/components/ui/Button";
 import { getAllProjects } from "@/lib/getProjects";
 
 export default function AboutPage() {
@@ -16,18 +21,16 @@ export default function AboutPage() {
           Hi, My name is Valdis Vascenkovs
         </h3>
         <p className="text-text text-[clamp(1.5rem,2.5vw,3.5rem)] font-bold tracking-wide">
-          I craft web solutions that blend stunning design with seamless
-          functionality. By integrating frontend creativity, robust backend
-          development, and smart automation, I deliver tools that streamline
-          operations, save time, and empower businesses to thrive.
+          I create digital solutions that transform ideas into powerful web
+          experiences. Through innovative frontend design, solid backend
+          architecture, and intelligent automation, I build tools that don't
+          just look great—they drive real business growth and make complex
+          processes effortless.
         </p>
       </section>
       <section className="py-18 bg-black">
         <div className="px-11 md:px-18 mx-auto space-y-24 flex flex-col items-center">
-          <h1 className="text-[clamp(2.5rem,5.0vw,5.8rem)] text-center flex flex-col leading-none uppercase font-extrabold text-text ">
-            <span>Featured</span>
-            <span>work</span>
-          </h1>
+          <SectionTitle titleTop="Featured" titleBot="Work" />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {projects.map((project) => {
               const year = new Date(project.publishedAt).getFullYear();
@@ -43,8 +46,47 @@ export default function AboutPage() {
               );
             })}
           </div>
+          <Button link="/projects" value="All Projects" />
         </div>
       </section>
+      <section>
+        <HorizontalTextScroll
+          topRowText="CODING • DESIGN"
+          botRowText="FRONTEND • BACKEND • DEVELOPMENT"
+        />
+      </section>
+      <div>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+        <h1>TEXT</h1>
+      </div>
       {/* ... your story, timeline, skills, socials, CTA, etc. */}
     </main>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -5,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Spinner from "@/components/ui/Spinner";
+import Button from "@/components/ui/Button";
 
 // Utility: split text into characters but keep spaces (NBSP)
 function splitText(text: string) {
@@ -25,9 +27,9 @@ export default function ContactPage() {
     email?: string[];
     message?: string[];
   }>({});
-  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
   const [touched, setTouched] = useState<{ email?: boolean }>({});
   const title = "Let's talk";
 
@@ -66,7 +68,7 @@ export default function ContactPage() {
         return;
       }
 
-      setStatus("ok");
+      setStatus("success");
       setMessage("");
     } catch {
       setStatus("error");
@@ -109,7 +111,7 @@ export default function ContactPage() {
             <div className="text-center">
               <motion.h1
                 layoutId="title"
-                className="text-7xl md:text-8xl text-primary font-semibold leading-none"
+                className="text-5xl md:text-8xl text-primary font-semibold leading-none"
               >
                 {/* Per-char entrance while intro is visible */}
                 {splitText(title).map((char, i) => (
@@ -162,7 +164,7 @@ export default function ContactPage() {
                 <motion.h1
                   layoutId="title"
                   initial={false} // do not re-run initial opacity animation
-                  className="text-6xl md:text-8xl text-primary font-semibold leading-none"
+                  className="text-5xl md:text-8xl text-primary font-semibold leading-none"
                   transition={{
                     type: "spring",
                     stiffness: 90,
@@ -190,8 +192,8 @@ export default function ContactPage() {
                     style={{ transformOrigin: "left" }}
                   />
                 )}
-                <div className="justify-end gap-12 text-lg mt-3 flex xl:hidden">
-                  <p className="text-text">Prefer direct mail?</p>
+                <div className="justify-end gap-2 text-sm md:text-lg mt-3 flex xl:hidden">
+                  <p className="text-text">Prefer direct email?</p>
                   <a
                     href="mailto:hello@gmail.com"
                     className="text-secondary hover:underline"
@@ -202,16 +204,17 @@ export default function ContactPage() {
               </div>
               {/* Subcopy */}
               <motion.div
-                className="mt-8 max-w-md text-xl text-text/80"
+                className="mt-0 max-w-md text-md md:text-xl text-text/80"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.15, duration: 0.25 }}
               >
-                <p>Tell me about your project or idea.</p>
-                <p>How do you see me helping you as a freelancer?</p>
                 <p>
-                  I work fully remote and usually collaborate through freelance
-                  platforms like Upwork or Fiverr.
+                  I'd love to hear about your project and vision. What
+                  challenges are you facing, and how can I help bring your ideas
+                  to life? I work remotely with clients worldwide and am
+                  flexible with collaboration—whether through platforms like
+                  Upwork and Fiverr or direct partnerships.
                 </p>
               </motion.div>
               <div className="w-64 h-0.5 bg-white/30 xl:hidden" />
@@ -408,62 +411,21 @@ export default function ContactPage() {
                       </p>
 
                       {/* Submit */}
-                      <motion.button
+                      <Button
+                        icon
                         type="submit"
-                        disabled={status === "sending"}
-                        className={`
-                            flex items-center justify-center gap-2 rounded-xl px-5 py-3 
-                            text-text
-                            ${
-                              status === "sending"
-                                ? "bg-primary/70 cursor-wait"
-                                : "bg-primary hover:bg-primary/90 cursor-pointer"
-                            }
-                        `}
-                        whileHover={{ scale: status === "sending" ? 1 : 1.05 }}
-                        whileTap={{ scale: status === "sending" ? 1 : 0.95 }}
-                        animate={
-                          status === "sending"
-                            ? { opacity: [1, 0.7, 1], scale: [1, 1.03, 1] }
-                            : {}
-                        }
-                        transition={{
-                          duration: 0.6,
-                          repeat: status === "sending" ? Infinity : 0,
-                        }}
-                      >
-                        <PaperAirplaneIcon
-                          height={30}
-                          className={`relative -top-1 -rotate-40 animate-ping opacity-85 ${
-                            status === "sending" && "hidden"
-                          }`}
-                        />
-                        {status === "sending" && (
-                          <Spinner size={24} className="relative top-0.5" />
-                        )}
-                        <span>
-                          {status === "sending"
-                            ? "Sending..."
-                            : "Get in touch!"}
-                        </span>
-                      </motion.button>
+                        status={status}
+                        value="Get in touch!"
+                      />
 
                       {/* Global feedback */}
                       <div className="flex h-8">
-                        {status === "ok" && (
+                        {status === "success" && (
                           <p
                             role="status"
                             className="flex justify-center text-sm mt-4 text-green-400"
                           >
                             Thanks! I&apos;ll get back to you soon.
-                          </p>
-                        )}
-                        {status === "error" && (
-                          <p
-                            role="status"
-                            className="flex justify-start items-start text-sm mt-4 text-red-400"
-                          >
-                            Couldn&apos;t send right now. Please try again.
                           </p>
                         )}
                       </div>

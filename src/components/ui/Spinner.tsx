@@ -12,12 +12,17 @@ export default function Spinner({
   className = "",
 }: Props) {
   return (
-    <span>
+    <span className="flex items-center justify-center">
       <span
         aria-label="Loading"
         aria-live="polite"
         role="status"
-        style={{ width: size, height: size, borderWidth: stroke }}
+        style={{
+          width: size,
+          height: size,
+          borderWidth: stroke,
+          verticalAlign: "middle",
+        }}
         className={`inline-block rounded-full animate-spin border-current border-t-transparent ${className}`}
       />
     </span>
