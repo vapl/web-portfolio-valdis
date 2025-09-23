@@ -19,7 +19,7 @@ const FeaturedWorkCard = ({
 }: HeroProps) => {
   return (
     <Link href={`/projects/${slug}`} className="group">
-      <div className="relative w-full max-w-screen-xl aspect-[3/2] rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-gray-800 transition transform hover:-translate-y-2">
+      <div className="relative w-full max-w-screen-xl aspect-[3/2] rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-white/10 transition transform hover:-translate-y-2">
         {/* Image */}
         <div className="absolute inset-0">
           <Image

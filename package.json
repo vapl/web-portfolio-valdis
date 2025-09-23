@@ -9,12 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@coreui/icons": "^3.0.1",
+    "@coreui/icons-react": "^2.3.0",
     "@heroicons/react": "^2.2.0",
     "@studio-freight/lenis": "^1.0.42",
     "@tailwindcss/typography": "^0.5.16",
     "flubber": "^0.4.2",
     "framer-motion": "^12.23.12",
     "gray-matter": "^4.0.3",
+    "gsap": "^3.13.0",
     "next": "15.4.6",
     "next-mdx-remote": "^5.0.0",
     "postcss": "^8.5.6",

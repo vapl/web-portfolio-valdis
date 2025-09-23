@@ -4,8 +4,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import Spinner from "@/components/ui/Spinner";
 import Button from "@/components/ui/Button";
 
 // Utility: split text into characters but keep spaces (NBSP)

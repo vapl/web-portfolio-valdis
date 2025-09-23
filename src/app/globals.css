@@ -55,3 +55,31 @@ body {
 ::selection {
   @apply bg-secondary text-text;
 }
+
+#cards {
+  --numcards: 5;
+  view-timeline-name: --cards-timeline;
+  view-timeline-axis: block;
+}
+
+/* sticky ir iekšā card__content */
+.card__content {
+  position: sticky;
+  top: 5rem;
+
+  --index0: calc(var(--index) - 1);
+  --start-range: calc(var(--index0) / var(--numcards) * 100%);
+  --end-range: calc(var(--index) / var(--numcards) * 100%);
+
+  animation: shrink linear both;
+  animation-timeline: --cards-timeline;
+  animation-range: exit-crossing var(--start-range) exit-crossing
+    var(--end-range);
+}
+
+@keyframes shrink {
+  to {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+}
