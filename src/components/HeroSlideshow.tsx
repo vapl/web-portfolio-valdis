@@ -115,6 +115,7 @@ export default function HeroSlideshow({
             activeSegment={activeSegment}
             segments={segCount}
             onPauseChange={setPaused}
+            onSegmentClick={(index) => setActiveSegment(index)}
           />
         </motion.div>
       </AnimatePresence>

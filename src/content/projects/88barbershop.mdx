@@ -1,0 +1,125 @@
+---
+slug: 88barbershop
+abbreviation: "88"
+title: 88Barbershop
+excerpt: A high-end multilingual website with dynamic services.
+cover: /images/projects/projects-covers/88barbershop-cover.jpg
+tags:
+  [
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+    "Sanity CMS",
+    "Framer Motion",
+    "i18n",
+  ]
+publishedAt: "2025-12-01"
+liveUrl: https://88barbershop.lv
+githubUrl: https://github.com/vapl/88barbershop
+---
+
+import {
+  Section,
+  Media,
+  Metrics,
+  PullQuote,
+  IntroCard,
+} from "@/components/case/blocks";
+
+<Section id="overview" title="">
+  <IntroCard
+    eyebrow="Case study"
+    title="Building a premium website for 88 Barbershop Riga"
+    invert={true}
+    maxWidth="xl"
+  >
+    "88 Barber shop" needed a modern website that reflects their brand: sharp,
+    energetic, and unmistakably premium. I built a full multilingual platform
+    (lv/en/ru) with dynamic content powered by Sanity CMS, custom animations,
+    responsive layouts, and service pages that adapt to the client's evolving
+    pricing and promotions.
+  </IntroCard>
+</Section>
+
+<Section id="solution" title="">
+  <Media
+    images={[
+      {
+        src: "/images/projects/88barbershop/88-barber-shop-desktop-demo.gif",
+        caption: "88 Barber Shop main page demonstration",
+        mode: "container",
+      },
+    ]}
+  />
+</Section>
+
+<Section>
+  <IntroCard
+    eyebrow="The challenge"
+    title="Transforming a chaotic brand into a clear and compelling digital identity"
+    invert={true}
+    maxWidth="xl"
+  >
+    The barbershop had no structured content, no design system, and no CMS.
+    Everything — from the service groups to the multilingual text blocks — had
+    to be organized, mapped and made editable. The result needed to feel
+    premium, load instantly, and work flawlessly on all devices.
+  </IntroCard>
+</Section>
+
+<Section id="problem" title="Problem">
+  - No CMS, no structure, no real content strategy - Services constantly
+  changed, requiring manual edits - No mobile optimization - Branding looked
+  cheap and inconsistent
+  <PullQuote>
+    The goal was simple: make 88 Barbershop feel as good online as it does when
+    you walk through their door.
+  </PullQuote>
+</Section>
+
+<Section id="solution" title="Solution">
+  <Media
+    images={[
+      {
+        src: "/images/projects/88barbershop/88-services-sanity-structure.png",
+        caption: "Services powered by Sanity CMS with structured schemas",
+        mode: "container",
+      },
+    ]}
+  />
+</Section>
+
+<Section>
+  <IntroCard
+    eyebrow="A system built for growth"
+    title="Dynamic services, CMS-driven pages and animations that elevate the brand"
+    invert={true}
+    maxWidth="xl"
+  >
+    I implemented a flexible CMS architecture for services, prices, barbers,
+    galleries and multilingual content. All visuals, ribbons, and transitions
+    use Framer Motion for silky-smooth interactions. Every piece of content is
+    easily editable by the team without touching code.
+  </IntroCard>
+</Section>
+
+<Section id="results" title="Results">
+  <Metrics
+    items={[
+      { label: "Performance score", value: "98+" },
+      { label: "Languages", value: "3" },
+      { label: "CMS entities", value: "40+" },
+      { label: "Load time", value: "< 300ms" },
+      { label: "Project cost", value: "€2100" },
+      { label: "Project duration", value: "4 weeks" },
+    ]}
+  />
+</Section>
+
+<Section id="scope" title="Project scope">
+  This project included a full custom UI/UX design in Figma, a multilingual
+  Next.js frontend, structured CMS architecture in Sanity, responsive layouts,
+  and custom animations powered by Framer Motion. The system allows the
+  barbershop team to independently update services, prices, barbers, and
+  multilingual content without touching code.
+</Section>

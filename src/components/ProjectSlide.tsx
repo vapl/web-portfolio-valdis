@@ -1,4 +1,5 @@
 "use client";
+
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +12,7 @@ type Props = {
   activeSegment?: number; // 0..segments-1
   segments?: number;
   onPauseChange?: (paused: boolean) => void;
+  onSegmentClick?: (segmentIndex: number) => void;
 };
 
 export default function ProjectSlide({
@@ -21,10 +23,8 @@ export default function ProjectSlide({
   activeSegment = 0,
   segments = 3,
   onPauseChange = () => {},
+  onSegmentClick,
 }: Props) {
-  // augšā var paturēt lokāli
-  const pauseCursor = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect x='5' y='3' width='5' height='18' fill='white' stroke='black' stroke-width='1'/%3E%3Crect x='14' y='3' width='5' height='18' fill='white' stroke='black' stroke-width='1'/%3E%3C/svg%3E") 12 12, auto`;
-
   return (
     <div className="flex items-center justify-center h-svh w-full overflow-hidden text-text">
       {/* Cover */}
@@ -49,12 +49,11 @@ export default function ProjectSlide({
 
           {/* Vertical progress */}
           <div
-            className="flex items-center"
+            className="flex items-center cursor-pointer"
             onMouseEnter={() => onPauseChange(true)}
             onMouseLeave={() => onPauseChange(false)}
             onTouchStart={() => onPauseChange(true)}
             onTouchEnd={() => onPauseChange(false)}
-            style={{ cursor: pauseCursor }}
           >
             <div className="flex h-[320px] w-[4px]">
               {/* slots ar konst. atstarpi starp tiem */}
@@ -63,7 +62,11 @@ export default function ProjectSlide({
                   const isActive = i === activeSegment;
 
                   return (
-                    <div key={i} className="relative h-[160px] w-[3px]">
+                    <div
+                      key={i}
+                      className="relative h-[160px] w-[3px]"
+                      onClick={() => onSegmentClick?.(i)}
+                    >
                       {/* statiska fona līnija */}
                       <div className="absolute inset-0 w-[3px] rounded bg-white/20" />
 
@@ -102,19 +105,13 @@ export default function ProjectSlide({
         <div className="flex items-center">
           <motion.div
             className="rounded-xl border-2 border-primary px-6 py-3 text-md text-primary hover:text-foreground/90 hover:bg-primary transition cursor-pointer"
-            initial={{ opacity: 0, scale: 0.5, x: "0vw", y: "-30vh" }} // no ekrāna vidus
-            animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.6 }}
+            onMouseEnter={() => onPauseChange(true)}
+            onMouseLeave={() => onPauseChange(false)}
           >
-            <Link href={`/projects/${slug}`}>
-              Go to Project
-            </Link>
+            <Link href={`/projects/${slug}`}>Go to Project</Link>
           </motion.div>
-
-
-          
         </div>
       </div>
     </div>
