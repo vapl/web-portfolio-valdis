@@ -87,38 +87,19 @@ export default function HeroSlideshow({
 
   const current = projects[index];
 
-  // --- Motion variants for slide transition (fade + slight slide) ---
-  const variants = {
-    initial: { opacity: 0, y: 12, filter: "blur(2px)" }, // when entering
-    animate: { opacity: 1, y: 0, filter: "blur(0px)" }, // when fully visible
-    exit: { opacity: 0, y: -12, filter: "blur(2px)" }, // when leaving
-  } as const;
-
   return (
     <div className="relative h-svh w-full overflow-hidden">
       {/* Absolute stack so slides overlap and can crossfade */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={index} // important for exit/enter to trigger
-          className="absolute inset-0 will-change-transform will-change-opacity"
-          variants={variants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ duration: 0.35, ease: "easeOut" }} // slide/fade timing
-        >
-          <ProjectSlide
-            abbreviation={current.abbreviation}
-            image={current.cover}
-            slug={current.slug}
-            progress={progress}
-            activeSegment={activeSegment}
-            segments={segCount}
-            onPauseChange={setPaused}
-            onSegmentClick={(index) => setActiveSegment(index)}
-          />
-        </motion.div>
-      </AnimatePresence>
+      <ProjectSlide
+        abbreviation={current.abbreviation}
+        image={current.cover}
+        slug={current.slug}
+        progress={progress}
+        activeSegment={activeSegment}
+        segments={segCount}
+        onPauseChange={setPaused}
+        onSegmentClick={(index) => setActiveSegment(index)}
+      />
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { animate, useMotionValue } from "framer-motion";
+import { animate, motion, useMotionValue } from "framer-motion";
 import * as flubber from "flubber";
 
 /**
@@ -67,29 +67,31 @@ export default function HeaderLogo() {
 
   // Click: on home do nothing (link to /), on subpages go back()
   const onClick = () => {
-    if (!isHome) router.back();
+    if (!isHome) router.push("/");
   };
 
   return (
     <>
       <button
-        aria-label={isHome ? "Home" : "Back"}
+        aria-label="Go to home page"
         onClick={onClick}
         className="fixed left-3 md:left-7 top-12 z-[999] h-10 w-10 cursor-pointer"
       >
         {/* One SVG, two paths (match your original two fills) */}
-        <svg
-          viewBox="0 0 1000 900"
-          width={isHome ? 50 : 40}
-          height={isHome ? 50 : 40}
-          role="img"
-          className="block"
-        >
-          {/* Dark part */}
-          <path d={dA} fill={isHome ? "#b45309" : "#d97706"} />
-          {/* Light part */}
-          <path d={dB} fill="#d97706" />
-        </svg>
+        <motion.div whileHover={{ x: isHome ? 0 : -4 }}>
+          <svg
+            viewBox="0 0 1000 900"
+            width={isHome ? 50 : 40}
+            height={isHome ? 50 : 40}
+            role="img"
+            className="block"
+          >
+            {/* Dark part */}
+            <path d={dA} fill={isHome ? "#b45309" : "#d97706"} />
+            {/* Light part */}
+            <path d={dB} fill="#d97706" />
+          </svg>
+        </motion.div>
       </button>
     </>
   );

@@ -2,8 +2,10 @@
 
 import AboutHero from "@/components/AboutHero";
 import ServiceCard from "@/components/cards/ServiceCard";
+import { PullQuote } from "@/components/case/blocks";
 import FeaturedWorkCard from "@/components/FeaturedWorkCard";
 import HorizontalTextScroll from "@/components/HorizontalTextScroll";
+import ProcessSpine from "@/components/ProcessSpine";
 import ServicesSection from "@/components/sections/ServicesSection";
 import SectionTitle from "@/components/SectionTitle";
 import Button from "@/components/ui/Button";
@@ -85,7 +87,7 @@ export default function AboutPage() {
               );
             })}
           </div>
-          <Button link="/projects" value="All Projects" />
+          {/* <Button link="/projects" value="All Projects" /> */}
         </div>
       </section>
       <section>
@@ -95,37 +97,22 @@ export default function AboutPage() {
         />
       </section>
       <ServicesSection />
-      <section>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
-        <p>dsfafafjasdjfāf'pda adsfpa'jfāojfā fa foa'pjfpao'fpoa</p>
+      <section className="py-24 bg-primary/10">
+        <div className="px-11 md:px-18 mx-auto space-y-24 flex flex-col items-center">
+          <SectionTitle titleTop="Why Me" className="text-text" />
+          <PullQuote>
+            <p className="text-text text-[clamp(1.5rem,2.5vw,3.5rem)] font-bold tracking-wide">
+              I don’t just build websites. I design systems that reduce manual
+              work, clarify decisions, and scale with your business.
+            </p>
+          </PullQuote>
+        </div>
       </section>
-      {/* ... your story, timeline, skills, socials, CTA, etc. */}
+      <section className=" flex flex-col items-center px-11 md:px-18 max-w-5xl mx-auto py-18 space-y-24">
+        <SectionTitle titleTop="How I Work" />
+        <ProcessSpine />
+        <Button link="/contact" value="Get in Touch" />
+      </section>
     </main>
   );
 }

@@ -36,12 +36,12 @@ export default function ServicesSection() {
       description: "API integrations and custom scripts to reduce manual work.",
       iconName: icon.cilBolt,
     },
-    {
-      id: 5,
-      title: "E-commerce",
-      description: "Online stores with payment systems and CMS integration.",
-      iconName: icon.cilCart,
-    },
+    // {
+    //   id: 5,
+    //   title: "E-commerce",
+    //   description: "Online stores with payment systems and CMS integration.",
+    //   iconName: icon.cilCart,
+    // },
   ];
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -54,11 +54,15 @@ export default function ServicesSection() {
 
   return (
     <section className="py-18 to-background">
-      <div className="relative px-11 md:px-18 mx-auto space-y-24 flex flex-col items-center">
+      <div className="relative px-11 md:px-18 space-y-24 flex flex-col items-center">
         <SectionTitle titleTop="How I Can" titleBot="Help" />
 
         {/* Sticky kartes */}
-        <div ref={wrapperRef} id="cards" className="flex flex-col gap-6">
+        <div
+          ref={wrapperRef}
+          id="cards"
+          className="flex flex-col gap-6 w-full md:max-w-5xl"
+        >
           {services.map((s, i) => (
             <AnimatedServiceCard
               key={s.id}

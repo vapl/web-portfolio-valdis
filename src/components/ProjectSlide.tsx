@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion, easeOut, easeIn } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,23 +27,75 @@ export default function ProjectSlide({
 }: Props) {
   return (
     <div className="flex items-center justify-center h-svh w-full overflow-hidden text-text">
-      {/* Cover */}
-      <Image
-        src={image}
-        alt={`${abbreviation} cover`}
-        fill
-        className="object-cover brightness-[0.6] ponter-events-none -z-10"
-        priority
-      />
+      <AnimatePresence mode="wait">
+        {/* Cover */}
+        <motion.div
+          key={image}
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <Image
+            src={image}
+            alt={`${abbreviation} cover`}
+            fill
+            className="object-cover brightness-[0.6] pointer-events-none"
+            priority
+          />
+        </motion.div>
+      </AnimatePresence>
 
       <div className="flex flex-col items-center justify-center gap-16">
         <div className="flex justify-center gap-10 relative">
           {/* Abbreviation on left */}
-          <div className="flex items-center">
+          <div className="flex items-center w-12">
             <div className="flex flex-col items-center gap-6 text-7xl md:text-8xl font-thin">
-              {abbreviation.split("").map((ch, i) => (
-                <span key={i}>{ch}</span>
-              ))}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={abbreviation}
+                  className="flex flex-col items-center gap-6 text-7xl md:text-8xl font-thin"
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                >
+                  {abbreviation.split("").map((ch, i, arr) => {
+                    const isTop = i === 0;
+                    const isBottom = i === arr.length - 1;
+
+                    // Direction logic
+                    const fromY = isTop ? -44 : isBottom ? 44 : 0;
+                    const exitY = isTop ? 44 : isBottom ? -44 : 0;
+
+                    return (
+                      <motion.span
+                        key={i}
+                        initial={{ opacity: 0, y: fromY }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                          transition: {
+                            duration: 0.35,
+                            ease: "easeIn",
+                            delay: i * 0.08, // stagger manually
+                          },
+                        }}
+                        exit={{
+                          opacity: 0,
+                          y: exitY,
+                          transition: {
+                            duration: 0.2,
+                            ease: "easeIn",
+                          },
+                        }}
+                      >
+                        {ch}
+                      </motion.span>
+                    );
+                  })}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
 
@@ -102,9 +154,9 @@ export default function ProjectSlide({
           </div>
         </div>
         {/* button */}
-        <div className="flex items-center">
+        <div className="flex items-center z-10">
           <motion.div
-            className="rounded-xl border-2 border-primary px-6 py-3 text-md text-primary hover:text-foreground/90 hover:bg-primary transition cursor-pointer"
+            className="rounded-xl border border-primary px-6 py-3 text-md text-primary hover:text-foreground/90 hover:bg-primary transition cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.6 }}
             onMouseEnter={() => onPauseChange(true)}

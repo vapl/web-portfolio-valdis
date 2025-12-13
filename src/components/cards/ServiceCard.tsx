@@ -21,7 +21,7 @@ const ServiceCard: React.FC<CardProps> = ({
 }) => {
   return (
     <div
-      className={`relative flex items-center border border-white/10 p-6 pt-18 pb-18 rounded-xl hover:shadow-xl transition-transform hover:-translate-y-2 bg-black ${className}`}
+      className={`relative h-80 items-center border border-white/10 p-6 pt-18 pb-18 rounded-xl hover:shadow-xl transition-transform hover:-translate-y-2 bg-black ${className}`}
     >
       {/* Content */}
       <div className="flex flex-col gap-2 z-10">
