@@ -193,10 +193,10 @@ export default function ContactPage() {
                 <div className="justify-end gap-2 text-sm md:text-lg mt-3 flex xl:hidden">
                   <p className="text-text">Prefer direct email?</p>
                   <a
-                    href="mailto:hello@gmail.com"
+                    href="mailto:hello.valdis@gmail.com"
                     className="text-secondary hover:underline"
                   >
-                    hello@gmail.com
+                    hello.valdis@gmail.com
                   </a>
                 </div>
               </div>
@@ -222,10 +222,10 @@ export default function ContactPage() {
               <div className="flex gap-12 text-lg">
                 <p className="text-text">Prefer direct mail?</p>
                 <a
-                  href={"mailto:hello@gmail.com"}
+                  href={"mailto:hello.valdis@gmail.com"}
                   className="text-secondary hover:underline"
                 >
-                  hello@gmail.com
+                  hello.valdis@gmail.com
                 </a>
               </div>
             </div>

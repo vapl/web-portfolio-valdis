@@ -5,19 +5,6 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
-/**
- * AboutHero
- * Sticky scroll hero with:
- *  - Fullscreen background image (your portrait)
- *  - Top & bottom overlay halves containing giant initials "VV"
- *  - On scroll, overlays split (top goes up, bottom goes down) revealing the image
- *  - Image subtly zooms out while the split happens
- *  - About copy fades in after the split completes
- *
- * Notes:
- *  - Put your image under /public/images/about/valdis-portrait.jpg
- *  - Tweak SPLIT_END and ABOUT_IN to control timings
- */
 export default function AboutHero() {
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -111,14 +98,26 @@ export default function AboutHero() {
           {/* Social links */}
           <div className="absolute bottom-0 w-full h-18">
             <div className="flex gap-12 justify-center">
-              <a href="http://">
-                <FaLinkedin size={24} className="text-primary/30" />
+              <a
+                href="https://www.linkedin.com/in/valdis-va%C5%A1%C4%8Denkovs-b68511276/"
+                className="text-primary hover:text-secondary transition-all duration-300"
+                target="_blank"
+              >
+                <FaLinkedin size={24} />
               </a>
-              <a href="http://">
-                <FaXTwitter size={24} className="text-primary/30" />
+              <a
+                href="https://x.com/VVascenkovs"
+                className="text-primary hover:text-secondary transition-all duration-300"
+                target="_blank"
+              >
+                <FaXTwitter size={24} />
               </a>
-              <a href="http://">
-                <FaGithub size={24} className="text-primary/30" />
+              <a
+                href="https://github.com/vapl"
+                className="text-primary hover:text-secondary transition-all duration-300"
+                target="_blank"
+              >
+                <FaGithub size={24} />
               </a>
             </div>
           </div>

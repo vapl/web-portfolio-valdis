@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { ProjectLinks } from "../ProjectLinks";
 
 type HeroCoverProps = {
   /** Full-bleed background image URL */
@@ -11,6 +12,8 @@ type HeroCoverProps = {
   title: string;
   /** Optional subtitle/excerpt */
   excerpt?: string;
+  liveUrl?: string;
+  githubUrl?: string;
 
   /** How many px of scroll completes the animation */
   shrinkDistance?: number; // default 500
@@ -25,6 +28,8 @@ const HeroShrinkingCover = ({
   imageSrc,
   title,
   excerpt,
+  liveUrl,
+  githubUrl,
   shrinkDistance = 500,
   bottomOffset = 82,
   containerPadBase = 64,
@@ -93,7 +98,7 @@ const HeroShrinkingCover = ({
   return (
     <section ref={sectionRef} className="relative w-full">
       {/* Sticky viewport: full-bleed, clipping inner parallax */}
-      <div className="sticky top-0 h-[100vh] w-[100vw] overflow-hidden bg-black">
+      <div className="sticky top-0 pb-32 md:pb-16 h-[100vh] w-[100vw] overflow-hidden bg-black">
         {/* Parallax layer (bigger than viewport to hide edges) */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
@@ -114,7 +119,7 @@ const HeroShrinkingCover = ({
 
         {/* Text block (one wrapper, continuous motion) */}
         <motion.div
-          className="relative left-1/2 top-1/2 flex items-center justify-center"
+          className="relative left-1/2 top-1/2 flex flex-col items-center justify-between"
           style={{
             translateX: textTX,
             translateY: textTY,
@@ -133,12 +138,17 @@ const HeroShrinkingCover = ({
             </motion.h1>
             {excerpt && (
               <motion.p
-                className="mt-3 text-text/85 max-w-2xl"
+                className="mt-3 text-text/85 max-w-5xl"
                 style={{ fontSize: subtitleSize }}
               >
                 {excerpt}
               </motion.p>
             )}
+            <div className="flex justify-start">
+              {liveUrl && githubUrl && (
+                <ProjectLinks liveUrl={liveUrl} githubUrl={githubUrl} />
+              )}
+            </div>
           </div>
         </motion.div>
       </div>

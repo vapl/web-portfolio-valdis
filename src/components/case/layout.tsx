@@ -41,6 +41,8 @@ export const CaseStudyLayout = ({
         bottomOffset={82}
         containerPadBase={260}
         containerPadMd={290}
+        liveUrl={meta.liveUrl}
+        githubUrl={meta.githubUrl}
       />
 
       {/* --- BODY --- */}
