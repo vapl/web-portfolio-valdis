@@ -6,6 +6,7 @@ import * as icon from "@coreui/icons";
 import AnimatedServiceCard from "../cards/AnimatedServiceCard";
 import { useRef } from "react";
 import { useScroll } from "framer-motion";
+import Button from "../ui/Button";
 
 export default function ServicesSection() {
   const services = [
@@ -79,6 +80,7 @@ export default function ServicesSection() {
             </AnimatedServiceCard>
           ))}
         </div>
+        <Button link="/contact" value="Get in Touch" />
       </div>
     </section>
   );

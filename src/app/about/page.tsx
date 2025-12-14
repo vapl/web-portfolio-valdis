@@ -8,6 +8,7 @@ import HorizontalTextScroll from "@/components/HorizontalTextScroll";
 import ProcessSpine from "@/components/ProcessSpine";
 import ServicesSection from "@/components/sections/ServicesSection";
 import SectionTitle from "@/components/SectionTitle";
+import Toolbox from "@/components/stack/Toolbox";
 import Button from "@/components/ui/Button";
 import { getAllProjects } from "@/lib/getProjects";
 import * as icon from "@coreui/icons";
@@ -108,7 +109,15 @@ export default function AboutPage() {
           </PullQuote>
         </div>
       </section>
-      <section className=" flex flex-col items-center px-11 md:px-18 max-w-5xl mx-auto py-18 space-y-24">
+      <section className="flex flex-col items-center px-11 md:px-18 mx-auto py-18 space-y-24 bg-black">
+        <SectionTitle
+          titleTop="What I"
+          titleBot="work Width"
+          className="text-text"
+        />
+        <Toolbox />
+      </section>
+      <section className="flex flex-col items-center px-11 md:px-18 mx-auto py-18 space-y-24">
         <SectionTitle titleTop="How I Work" />
         <ProcessSpine />
         <Button link="/contact" value="Get in Touch" />

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import { motion, AnimatePresence } from "framer-motion";
+import { IoIosArrowRoundUp } from "react-icons/io";
 
 export default function GoTotop() {
   const [visible, setVisible] = useState(false);
@@ -37,11 +37,14 @@ export default function GoTotop() {
                         fixed bottom-6 right-6 z-999
                         rounded-full border border-white/20
                         bg-background/80 backdrop-blur
-                        px-4 py-3 text-sm
+                        px-3 py-3 text-sm
                         hover:border-primary hover:text-primary
                     "
         >
-          ↑ Top
+          <div className="flex items-center">
+            <IoIosArrowRoundUp size={20} />
+            <span className="pr-2">Top</span>
+          </div>
         </motion.button>
       )}
     </AnimatePresence>
