@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
+import EmailLink from "@/components/contact/EmailLink";
 
 // Utility: split text into characters but keep spaces (NBSP)
 function splitText(text: string) {
@@ -192,12 +193,7 @@ export default function ContactPage() {
                 )}
                 <div className="justify-end gap-2 text-sm md:text-lg mt-3 flex xl:hidden">
                   <p className="text-text">Prefer direct email?</p>
-                  <a
-                    href="mailto:hello.valdis@gmail.com"
-                    className="text-secondary hover:underline"
-                  >
-                    hello.valdis@gmail.com
-                  </a>
+                  <EmailLink />
                 </div>
               </div>
               {/* Subcopy */}
@@ -221,12 +217,7 @@ export default function ContactPage() {
               <div className="w-64 h-0.5 bg-white/30" />
               <div className="flex gap-12 text-lg">
                 <p className="text-text">Prefer direct mail?</p>
-                <a
-                  href={"mailto:hello.valdis@gmail.com"}
-                  className="text-secondary hover:underline"
-                >
-                  hello.valdis@gmail.com
-                </a>
+                <EmailLink />
               </div>
             </div>
           </div>

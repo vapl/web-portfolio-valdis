@@ -82,13 +82,18 @@ function VideoBlock({ item, bleed }: { item: Vid; bleed: boolean }) {
     };
     video.addEventListener("loadedmetadata", onMeta);
 
+    let rafId: number | null = null;
+    let targetTime = 0;
+
     const unsub = scrollYProgress.on("change", (p) => {
       if (!duration) return;
 
-      const t = Math.max(0, Math.min(duration, p * duration));
-      // Jumping frames is OK for scrub; keep video paused
-      if (!video.paused) video.pause();
-      video.currentTime = t;
+      if (rafId !== null) {
+        rafId = requestAnimationFrame(() => {
+          video.currentTime = targetTime;
+          rafId = null;
+        });
+      }
     });
 
     return () => {

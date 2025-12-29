@@ -25,6 +25,7 @@ import {
   Metrics,
   PullQuote,
   IntroCard,
+  PhoneShowcase,
 } from "@/components/case/blocks";
 
 <Section id="overview" title="">
@@ -34,10 +35,15 @@ import {
     invert={true}
     maxWidth="xl"
   >
-    NFTs Guard is a real MVP security platform that I built to explore risk
-    detection in NFT markets. It connects blockchain data with an intuitive
-    dashboard, helping users quickly identify suspicious patterns in wallets and
-    collections.
+    NFTs Guard is an MVP security platform built to explore risk detection in NFT
+    ecosystems. The project follows a Web2-first architecture that consumes and
+    processes blockchain data, transforming raw on-chain activity into clear,
+    actionable insights.
+
+    The platform helps users identify suspicious patterns in wallets and NFT
+    collections through a fast, intuitive dashboard designed for both technical
+    and non-technical users.
+
   </IntroCard>
 </Section>
 
@@ -46,7 +52,8 @@ import {
     images={[
       {
         src: "/images/projects/nfts-guard/nfts-guard-scanner-results-demo.gif",
-        caption: "NFT scanner results demonstration",
+        caption:
+          "NFTs Guard processes blockchain data and highlights risk indicators in real time",
         mode: "container",
       },
     ]}
@@ -55,45 +62,99 @@ import {
 
 <Section>
   <IntroCard
-    eyebrow="It all started..."
-    title="With an idea"
+    eyebrow="Background"
+    title="From idea to MVP"
     invert={true}
     maxWidth="xl"
   >
-    And actually no idea of the work tied to a site of this scale. From the
-    pitch to the research to the wireframing to the design and the creation of
-    interactions and animations, it was a long road. One that was fun and one I
-    want to talk about in this case. Thoughts, ideas, and questions we tackled
-    and solved.
+    The project started with a simple idea: make on-chain risk signals easier to
+    understand for everyday NFT users. What initially seemed like a relatively
+    small product quickly revealed the complexity behind blockchain data,
+    performance constraints, and usability challenges.
+
+    From early research and wireframing to interaction design and implementation,
+    the project evolved through continuous iteration, trade-offs, and technical
+    decisions aimed at keeping the MVP focused and realistic.
+
   </IntroCard>
 </Section>
 
 <Section>
-  <Media
-    images={[
-      {
-        type: "video",
-        src: "/images/projects/nfts-guard/nfts-guard-media-mobile.mp4",
-        caption: "Mobile interaction",
-        mode: "bleed",
-        scrub: true,
-      },
-    ]}
+  <PhoneShowcase
+    center="/images/projects/nfts-guard/phone-center.png"
+    left="/images/projects/nfts-guard/phone-left.png"
+    right="/images/projects/nfts-guard/phone-right.png"
   />
 </Section>
 
 <Section id="problem" title="Problem">
-  - Rug pulls, wash trading, whale manipulation...
-  <PullQuote>"We turn raw on-chain noise into actionable alerts."</PullQuote>
+  NFT markets are highly exposed to manipulation patterns such as rug pulls,
+  wash trading, and whale-driven price movements. While blockchain data is
+  transparent, identifying these patterns requires technical knowledge and
+  manual investigation.
+
+  <PullQuote>
+    "We turn raw on-chain noise into actionable alerts."
+  </PullQuote>
+</Section>
+
+<Section id="scope" title="Scope & Responsibilities">
+  NFTs Guard was developed as a solo project, covering the entire product
+  lifecycle from concept definition to a production-ready MVP.
+
+  <ul>
+    <li>- Defining the product concept and MVP scope</li>
+    <li>- UX/UI and interaction design</li>
+    <li>- Frontend development using Next.js, TypeScript, and Tailwind CSS</li>
+    <li>- Backend logic and database design with Supabase and PostgreSQL</li>
+    <li>- Integrating Ethereum blockchain data as an external data source</li>
+    <li>- Designing heuristic-based risk detection and scoring logic</li>
+    <li>- Performance optimization and system stability</li>
+  </ul>
+</Section>
+
+<Section id="challenges" title="Technical Challenges">
+  One of the main challenges was working with raw blockchain data in a traditional
+  Web2 architecture. While the data is public, it is noisy, inconsistent, and not
+  designed for direct user consumption.
+
+  <ul>
+    <li>- Normalizing and interpreting noisy on-chain data</li>
+    <li>- Designing a readable risk score for non-technical users</li>
+    <li>- Maintaining low latency while relying on external data sources</li>
+    <li>- Avoiding tight coupling between blockchain logic and UI components</li>
+  </ul>
+</Section>
+
+<Section id="decisions" title="MVP Decisions & Trade-offs">
+  To keep the project focused and achievable, several conscious trade-offs were
+  made during development. Rather than building decentralized execution logic,
+  the platform treats blockchain strictly as a data layer.
+
+  <ul>
+    <li>- Web2-first architecture with blockchain as a data source</li>
+    <li>- Ethereum-only support for faster validation</li>
+    <li>- Heuristic-based risk flags instead of ML-heavy solutions</li>
+    <li>- Scalable architecture without premature complexity</li>
+  </ul>
 </Section>
 
 <Section id="results" title="Results">
   <Metrics
     items={[
-      { label: "MVP build", value: "4 weeks" },
+      { label: "Active MVP build", value: "4 weeks" },
+      { label: "Total project duration", value: "12 weeks (part-time)" },
       { label: "Risk flags", value: "12+" },
       { label: "Latency", value: "< 250ms" },
       { label: "Chains", value: "ETH (SOL planned)" },
+      { label: "Estimated project value", value: "€7900" },
     ]}
   />
+</Section>
+
+<Section id="outcome" title="Outcome">
+  NFTs Guard demonstrates the ability to design and deliver a
+  production-oriented Web2 application that leverages blockchain data without
+  unnecessary complexity. The project highlights end-to-end ownership, pragmatic
+  decision-making, and a strong focus on usability and performance.
 </Section>

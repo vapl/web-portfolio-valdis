@@ -43,7 +43,7 @@ export default function AboutHero() {
         {/* Background image (your portrait) */}
         <motion.div className="absolute inset-0" style={{ scale: imgScale }}>
           <Image
-            src="/images/about/portrait-hidden.jpg" // <-- replace with your file
+            src="/images/about/portrait-image.png" // <-- replace with your file
             alt="Valdis portrait"
             fill
             priority

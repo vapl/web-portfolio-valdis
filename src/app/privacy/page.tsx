@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import EmailLink from "@/components/contact/EmailLink";
 
 // Tip: keep the component name PascalCase for conventions
 const PrivacyPage = () => {
@@ -91,14 +92,7 @@ const PrivacyPage = () => {
           <h2 className="text-3xl font-bold mt-8 mb-4">Contact</h2>
           <p className="text-2xl">
             If you have any questions about this Privacy Policy, please contact
-            us at{" "}
-            <Link
-              href="mailto:valdis@gmail.com"
-              className="underline underline-offset-4"
-            >
-              valdis@gmail.com
-            </Link>
-            .
+            us at <EmailLink />.
           </p>
         </section>
       </div>
