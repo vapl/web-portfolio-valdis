@@ -83,7 +83,7 @@ git clone https://github.com/vapl/web-portfolio-valdis.git
 cd web-portfolio-valdis
 npm install
 npm run dev
-
+```
 
 📫 Contact
 
@@ -95,4 +95,3 @@ or collaboration opportunities
 You can reach me via the links on the website.
 
 © Valdis Vascenkovs
-```
