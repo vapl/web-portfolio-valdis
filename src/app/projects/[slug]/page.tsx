@@ -12,11 +12,7 @@ export async function generateStaticParams() {
   return getProjectSlugs().map((slug) => ({ slug }));
 }
 
-export default async function ProjectPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function Page({ params }: { params: { slug: string } }) {
   const { content, meta } = getProjectBySlug(params.slug);
   const projects = getAllProjects();
 
