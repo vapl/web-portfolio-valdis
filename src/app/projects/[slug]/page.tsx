@@ -12,11 +12,16 @@ export async function generateStaticParams() {
   return getProjectSlugs().map((slug) => ({ slug }));
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const { content, meta } = getProjectBySlug(params.slug);
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const { content, meta } = getProjectBySlug(slug);
   const projects = getAllProjects();
 
-  const index = projects.findIndex((p) => p.slug === params.slug);
+  const index = projects.findIndex((p) => p.slug === slug);
 
   const prev = projects[index - 1] ?? null;
   const next = projects[index + 1] ?? null;
