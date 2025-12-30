@@ -12,7 +12,11 @@ export async function generateStaticParams() {
   return getProjectSlugs().map((slug) => ({ slug }));
 }
 
-export const ProjectPage = async ({ params }: { params: { slug: string } }) => {
+export default async function ProjectPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const { content, meta } = getProjectBySlug(params.slug);
   const projects = getAllProjects();
 
@@ -32,6 +36,4 @@ export const ProjectPage = async ({ params }: { params: { slug: string } }) => {
       {mdx.content}
     </CaseStudyLayout>
   );
-};
-
-export default ProjectPage;
+}
