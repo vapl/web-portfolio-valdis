@@ -26,6 +26,7 @@ import {
   PullQuote,
   IntroCard,
   PhoneShowcase,
+  DecisionBlock,
 } from "@/components/case/blocks";
 
 <Section id="overview" title="">
@@ -98,46 +99,69 @@ import {
   </PullQuote>
 </Section>
 
-<Section id="scope" title="Scope & Responsibilities">
-  NFTs Guard was developed as a solo project, covering the entire product
-  lifecycle from concept definition to a production-ready MVP.
-
-  <ul>
-    <li>- Defining the product concept and MVP scope</li>
-    <li>- UX/UI and interaction design</li>
-    <li>- Frontend development using Next.js, TypeScript, and Tailwind CSS</li>
-    <li>- Backend logic and database design with Supabase and PostgreSQL</li>
-    <li>- Integrating Ethereum blockchain data as an external data source</li>
-    <li>- Designing heuristic-based risk detection and scoring logic</li>
-    <li>- Performance optimization and system stability</li>
-  </ul>
+<Section>
+  <IntroCard
+    eyebrow="Scope & Responsibilities"
+    title="Full solo project lifecycle"
+    invert={true}
+    maxWidth="xl"
+  >
+    NFTs Guard was developed as a solo project, covering the entire product
+    lifecycle from concept definition to a production-ready MVP.
+    Responsibilities included:
+    <ul className="pl-12 ">
+      <li>— Defining the product concept and MVP scope</li>
+      <li>— UX/UI and interaction design</li>
+      <li>
+        — Frontend development using Next.js, TypeScript, and Tailwind CSS
+      </li>
+      <li>— Backend logic and database design with Supabase and PostgreSQL</li>
+      <li>— Integrating Ethereum blockchain data as an external data source</li>
+      <li>— Designing heuristic-based risk detection and scoring logic</li>
+      <li>— Performance optimization and system stability</li>
+    </ul>
+  </IntroCard>
 </Section>
 
-<Section id="challenges" title="Technical Challenges">
-  One of the main challenges was working with raw blockchain data in a traditional
-  Web2 architecture. While the data is public, it is noisy, inconsistent, and not
-  designed for direct user consumption.
-
-  <ul>
-    <li>- Normalizing and interpreting noisy on-chain data</li>
-    <li>- Designing a readable risk score for non-technical users</li>
-    <li>- Maintaining low latency while relying on external data sources</li>
-    <li>- Avoiding tight coupling between blockchain logic and UI components</li>
-  </ul>
+<Section id="challenges">
+  <IntroCard
+    eyebrow="Challenges"
+    title="Technical Challenges"
+    invert={true}
+    maxWidth="xl"
+  >
+    One of the main challenges was working with raw blockchain data in a
+    traditional Web2 architecture. While the data is public, it is noisy,
+    inconsistent, and not designed for direct user consumption.
+  </IntroCard>
 </Section>
 
-<Section id="decisions" title="MVP Decisions & Trade-offs">
-  To keep the project focused and achievable, several conscious trade-offs were
-  made during development. Rather than building decentralized execution logic,
-  the platform treats blockchain strictly as a data layer.
-
-  <ul>
-    <li>- Web2-first architecture with blockchain as a data source</li>
-    <li>- Ethereum-only support for faster validation</li>
-    <li>- Heuristic-based risk flags instead of ML-heavy solutions</li>
-    <li>- Scalable architecture without premature complexity</li>
-  </ul>
-</Section>
+<DecisionBlock
+  eyebrow="MVP decisions"
+  title="Key architectural trade-offs"
+  items={[
+    {
+      title: "Web2-first architecture",
+      decision:
+        "Blockchain is treated strictly as a data source, not an execution layer.",
+      tradeoff:
+        "No on-chain execution, but significantly faster iteration and simpler UX.",
+    },
+    {
+      title: "Ethereum-only support",
+      decision:
+        "Focused on a single chain to validate the core risk-detection concept.",
+      tradeoff:
+        "Limited chain coverage in exchange for faster validation and lower complexity.",
+    },
+    {
+      title: "Heuristic-based risk scoring",
+      decision: "Rule-based signals instead of ML-heavy models.",
+      tradeoff:
+        "Less predictive power, but higher transparency and explainability for users.",
+    },
+  ]}
+/>
 
 <Section id="results" title="Results">
   <Metrics

@@ -2,6 +2,7 @@ import Section from "./Section";
 import Media from "./Media";
 import IntroCard from "./IntroCard";
 import PhoneShowcase from "./PhoneShowcase";
+import { DecisionBlock } from "./DecisionBlock";
 
 export const PullQuote = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -33,4 +34,4 @@ export const Metrics = ({
   );
 };
 
-export { Section, Media, IntroCard, PhoneShowcase };
+export { Section, Media, IntroCard, PhoneShowcase, DecisionBlock };

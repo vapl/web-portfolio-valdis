@@ -39,6 +39,19 @@ const HeroShrinkingCover = ({
   const [vw, setVw] = useState(1200);
   const [vh, setVh] = useState(800);
   const [pad, setPad] = useState(containerPadBase);
+  const [isMobile, setIsmobile] = useState(false);
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onResize = () => {
+      setIsmobile(window.innerWidth < 768);
+    };
+
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  });
 
   useEffect(() => {
     // Keep it super simple; no abservers needed
@@ -74,26 +87,22 @@ const HeroShrinkingCover = ({
 
   // --- 3) Background parallax (full-bleed, no gaps) ---
   // Keep the viewport fixed 100vh; move ONLY the inner layer
-  const imageScale = useTransform(p, [0, 1], [1.02, 0.92]);
-  const imageY = useTransform(p, [0, 1], [0, -24]); // small parallax
+  const imageScale = useTransform(p, [0, 1], [1.05, 0.92]);
+  const imageY = useTransform(p, [0, 1], [0, -20]); // small parallax
   // Inner is larger than viewport; we don't scale here (size set by min-w/min-h)
   // If you want subtle zoom: const
 
   // --- 4) Text transforms (center -> bottom-left container edge) ---
-  const textScale = useTransform(p, [0, 1], [1, 0.92]);
   const textOpacity = useTransform(p, [0, 1], [1, 1]);
 
   // Title size transform
-  const titleSize = useTransform(p, [0, 1], ["5rem", "3.75rem"]);
+  const titleSizeDesktop = useTransform(p, [0, 1], ["5rem", "3.75rem"]);
+  const titleSizeMobile = useTransform(p, [0, 1], ["5rem", "2.25rem"]);
   const subtitleSize = useTransform(p, [0, 1], ["2rem", "1.2rem"]);
 
   // Delta from viewport center to container's left edge and bottom offset:
-  const endDX = -(vw / 2 - pad);
   const endDY = vh / 2 - bottomOffset;
-
-  // We keep anchor at 50%/50% and add pixel deltas with calc()
-  const textTX = useTransform(p, (t) => `calc(-50% + ${endDX * t}px)`);
-  const textTY = useTransform(p, (t) => `calc(-50% + ${endDY * t}px)`);
+  const textY = useTransform(p, [0, 1], [0, endDY]);
 
   return (
     <section ref={sectionRef} className="relative w-full">
@@ -119,20 +128,20 @@ const HeroShrinkingCover = ({
 
         {/* Text block (one wrapper, continuous motion) */}
         <motion.div
-          className="relative left-1/2 top-1/2 flex flex-col items-center justify-between"
+          className="absolute w-full pb-16 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           style={{
-            translateX: textTX,
-            translateY: textTY,
-            scale: textScale,
+            y: textY,
             opacity: textOpacity,
             willChange: "transform, opacity",
           }}
         >
           {/* This container must match your page body container */}
-          <div className="px-16">
+          <div ref={containerRef} className="px-16">
             <motion.h1
               className="font-bold tracking-tight leading-tight"
-              style={{ fontSize: titleSize }}
+              style={{
+                fontSize: isMobile ? titleSizeMobile : titleSizeDesktop,
+              }}
             >
               {title}
             </motion.h1>

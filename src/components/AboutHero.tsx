@@ -2,11 +2,21 @@
 
 import Image from "next/image";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
 export default function AboutHero() {
   const ref = useRef<HTMLDivElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleReasize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleReasize();
+    window.addEventListener("resize", handleReasize);
+    return () => window.removeEventListener("resize", handleReasize);
+  });
 
   // Track scroll progress for this section (0..1)
   const { scrollYProgress } = useScroll({
@@ -83,7 +93,7 @@ export default function AboutHero() {
           className="absolute inset-0 overflow-hidden will-change-transform"
           style={{
             y: bottomY,
-            clipPath: "inset(50.0% 0 0 0)",
+            clipPath: `inset(${isMobile ? "49.89%" : "49.96%"} 0 0 0)`,
           }}
         >
           <div className="absolute inset-0 bg-black/70" />

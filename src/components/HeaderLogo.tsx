@@ -75,7 +75,7 @@ export default function HeaderLogo() {
       <button
         aria-label="Go to home page"
         onClick={onClick}
-        className="fixed left-3 md:left-7 top-12 z-[999] h-10 w-10 cursor-pointer"
+        className="fixed left-2 md:left-6 top-12 z-[999] h-10 w-10 cursor-pointer"
       >
         {/* One SVG, two paths (match your original two fills) */}
         <motion.div whileHover={{ x: isHome ? 0 : -4 }}>

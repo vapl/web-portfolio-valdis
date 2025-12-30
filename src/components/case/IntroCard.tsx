@@ -35,7 +35,7 @@ export default function IntroCard({
 
   return (
     <section className={`w-full ${textBase} selection:bg-orange-500/20`}>
-      <div className="mx-auto w-full max-w-7xl px-6 md:px-10 lg:px-12">
+      <div className="mx-auto w-full ">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 lg:gap-16 py-10 md:py-16">
           {/* Left column */}
           <div className="md:col-span-5">
