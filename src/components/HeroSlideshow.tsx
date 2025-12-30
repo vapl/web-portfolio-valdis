@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import ProjectSlide from "@/components/ProjectSlide";
-import { AnimatePresence, motion } from "framer-motion";
 import { ProjectMeta } from "@/lib/getProjects";
 
 type HeroSlideshowProps = {

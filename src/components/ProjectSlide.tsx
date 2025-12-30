@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, easeOut, easeIn } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 

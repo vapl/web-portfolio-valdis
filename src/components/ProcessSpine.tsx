@@ -1,13 +1,7 @@
 "use client";
 
-import {
-  motion,
-  MotionValue,
-  useMotionValue,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion, MotionValue, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 type Step = {
   index: string;

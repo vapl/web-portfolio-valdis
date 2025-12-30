@@ -1,7 +1,6 @@
 // "use client"; // Not needed for a static policy page
 
 import React from "react";
-import Link from "next/link";
 import EmailLink from "@/components/contact/EmailLink";
 
 // Tip: keep the component name PascalCase for conventions

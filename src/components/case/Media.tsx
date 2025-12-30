@@ -83,9 +83,9 @@ function VideoBlock({ item, bleed }: { item: Vid; bleed: boolean }) {
     video.addEventListener("loadedmetadata", onMeta);
 
     let rafId: number | null = null;
-    let targetTime = 0;
+    const targetTime = 0;
 
-    const unsub = scrollYProgress.on("change", (p) => {
+    const unsub = scrollYProgress.on("change", () => {
       if (!duration) return;
 
       if (rafId !== null) {

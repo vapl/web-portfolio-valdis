@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { easeIn, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 type ContactProps = {
   email?: string;

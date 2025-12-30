@@ -36,9 +36,7 @@ const HeroShrinkingCover = ({
   containerPadMd = 96,
 }: HeroCoverProps) => {
   // --- 1) Measure viewport + choose container padding (match your body container) ---
-  const [vw, setVw] = useState(1200);
   const [vh, setVh] = useState(800);
-  const [pad, setPad] = useState(containerPadBase);
   const [isMobile, setIsmobile] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -56,9 +54,7 @@ const HeroShrinkingCover = ({
   useEffect(() => {
     // Keep it super simple; no abservers needed
     const onResize = () => {
-      setVw(window.innerWidth);
       setVh(window.innerHeight);
-      setPad(window.innerWidth >= 768 ? containerPadMd : containerPadBase);
     };
     onResize();
     window.addEventListener("resize", onResize);
