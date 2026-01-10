@@ -57,7 +57,7 @@ export default function AboutHero() {
             alt="Valdis portrait"
             fill
             priority
-            className="object-cover object-center"
+            className="object-cover object-top"
           />
           {/* Subtle vignette to keep text legible */}
           <motion.div
