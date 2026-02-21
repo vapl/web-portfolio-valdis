@@ -5,6 +5,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import LenisProvider from "@/components/LenisProvider";
 import GoToTop from "@/components/GoToTop";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -41,6 +42,7 @@ export default function RootLayout({
         <Navigation />
         <LenisProvider>{children}</LenisProvider>
         <GoToTop />
+        <Analytics />
       </body>
     </html>
   );
