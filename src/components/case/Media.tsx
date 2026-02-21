@@ -26,7 +26,15 @@ type Vid = Common & {
   loop?: boolean;
 };
 
-type MediaInputItem = (Partial<Img> & { src: string }) | Vid;
+type ImgInput = Common & {
+  type?: "image";
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+};
+
+type MediaInputItem = ImgInput | Vid;
 
 const BleedFigure: React.FC<{
   children: React.ReactNode;
@@ -131,19 +139,18 @@ const Media = ({ images = [] }: { images?: MediaInputItem[] }) => {
     <div className="space-y-8">
       {safeImages.map((item, i) => {
         const bleed = item.mode === "bleed";
-        const type = item.type ?? "image";
-
-        if (type === "video") {
+        if (item.type === "video") {
           return <VideoBlock key={i} item={item as Vid} bleed={bleed} />;
         }
 
         // image
+        const imageItem = item as ImgInput;
         const imageEl = (
           <Image
-            src={item.src}
-            alt={item.alt ?? ""}
-            width={item.width ?? 1400}
-            height={item.height ?? 900}
+            src={imageItem.src}
+            alt={imageItem.alt ?? ""}
+            width={imageItem.width ?? 1400}
+            height={imageItem.height ?? 900}
             className="w-full h-auto object-cover rounded-xl"
             priority={false}
           />
@@ -152,8 +159,8 @@ const Media = ({ images = [] }: { images?: MediaInputItem[] }) => {
         return bleed ? (
           <BleedFigure key={i} caption={item.caption}>
             <Image
-              src={item.src}
-              alt={item.alt ?? ""}
+              src={imageItem.src}
+              alt={imageItem.alt ?? ""}
               width={1920}
               height={1080}
               className="w-full h-auto object-cover"

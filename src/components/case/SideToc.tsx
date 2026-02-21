@@ -1,11 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Item = { id: string; label: string };
 
 export default function SideToc({ items = [] }: { items?: Item[] }) {
-  const safeItems = Array.isArray(items) ? items : [];
+  const safeItems = useMemo(
+    () => (Array.isArray(items) ? items : []),
+    [items]
+  );
   const [active, setActive] = useState(safeItems[0]?.id ?? "");
 
   useEffect(() => {
