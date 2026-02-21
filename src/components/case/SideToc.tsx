@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 
 type Item = { id: string; label: string };
 
-export default function SideToc({ items }: { items: Item[] }) {
-  const [active, setActive] = useState(items[0]?.id ?? "");
+export default function SideToc({ items = [] }: { items?: Item[] }) {
+  const safeItems = Array.isArray(items) ? items : [];
+  const [active, setActive] = useState(safeItems[0]?.id ?? "");
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -17,17 +18,17 @@ export default function SideToc({ items }: { items: Item[] }) {
       },
       { rootMargin: "-30% 0px -55% 0px", threshold: [0, 0.2, 0.5, 1] }
     );
-    items.forEach(({ id }) => {
+    safeItems.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (el) obs.observe(el);
     });
     return () => obs.disconnect();
-  }, [items]);
+  }, [safeItems]);
 
   return (
     <aside className="hidden lg:block sticky top-24 h-[70vh] w-64 pr-6">
       <nav className="space-y-2 text-sm">
-        {items.map(({ id, label }) => {
+        {safeItems.map(({ id, label }) => {
           const isActive = id === active;
           return (
             <a

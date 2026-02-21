@@ -8,14 +8,15 @@ type DecisionItem = {
 export function DecisionBlock({
   eyebrow,
   title,
-  items,
+  items = [],
   invert = false,
 }: {
   eyebrow: string;
   title: string;
-  items: DecisionItem[];
+  items?: DecisionItem[];
   invert?: boolean;
 }) {
+  const safeItems = Array.isArray(items) ? items : [];
   const textDim = invert ? "text-white/70" : "text-zinc-600";
   return (
     <section className="relative py-10 md:py-16 w-full">
@@ -36,7 +37,7 @@ export function DecisionBlock({
 
         {/* Decisions */}
         <div className="space-y-12">
-          {items.map((item, i) => (
+          {safeItems.map((item, i) => (
             <div
               key={i}
               className="relative rounded-xl border border-white/10 bg-white/5 p-8 backdrop-blur"

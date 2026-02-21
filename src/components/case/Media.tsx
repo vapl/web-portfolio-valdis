@@ -26,7 +26,7 @@ type Vid = Common & {
   loop?: boolean;
 };
 
-type MediaItem = Img | Vid;
+type MediaInputItem = (Partial<Img> & { src: string }) | Vid;
 
 const BleedFigure: React.FC<{
   children: React.ReactNode;
@@ -124,14 +124,17 @@ function VideoBlock({ item, bleed }: { item: Vid; bleed: boolean }) {
   );
 }
 
-const Media = ({ images }: { images: MediaItem[] }) => {
+const Media = ({ images = [] }: { images?: MediaInputItem[] }) => {
+  const safeImages = Array.isArray(images) ? images : [];
+
   return (
     <div className="space-y-8">
-      {images.map((item, i) => {
+      {safeImages.map((item, i) => {
         const bleed = item.mode === "bleed";
+        const type = item.type ?? "image";
 
-        if (item.type === "video") {
-          return <VideoBlock key={i} item={item} bleed={bleed} />;
+        if (type === "video") {
+          return <VideoBlock key={i} item={item as Vid} bleed={bleed} />;
         }
 
         // image

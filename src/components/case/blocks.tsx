@@ -13,13 +13,15 @@ export const PullQuote = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const Metrics = ({
-  items,
+  items = [],
 }: {
-  items: { label: string; value: string }[];
+  items?: { label: string; value: string }[];
 }) => {
+  const safeItems = Array.isArray(items) ? items : [];
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 my-6">
-      {items.map((m) => (
+      {safeItems.map((m) => (
         <div
           key={m.label}
           className="rounded-2xl border border-white/15 p-4 bg-white/[0.03] shadow-sm"
