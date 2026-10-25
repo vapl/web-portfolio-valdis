@@ -35,7 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* Browser extensions may add body attributes before React hydrates. */}
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} font-roboto antialiased bg-background`}
       >
         <HeaderLogo />

@@ -192,7 +192,7 @@ export default function ContactPage() {
                   />
                 )}
                 <div className="justify-end gap-2 text-sm md:text-lg mt-3 flex xl:hidden">
-                  <p className="text-text">Prefer direct email?</p>
+                  <p className="text-text">Prefer email?</p>
                   <EmailLink />
                 </div>
               </div>
@@ -204,11 +204,7 @@ export default function ContactPage() {
                 transition={{ delay: 1.15, duration: 0.25 }}
               >
                 <p>
-                  I'd love to hear about your project and vision. What
-                  challenges are you facing, and how can I help bring your ideas
-                  to life? I work remotely with clients worldwide and am
-                  flexible with collaboration—whether through platforms like
-                  Upwork and Fiverr or direct partnerships.
+                  I’m open to interesting opportunities where I can build practical digital systems, automate real workflows, work with data, and solve meaningful business problems.
                 </p>
               </motion.div>
               <div className="w-64 h-0.5 bg-white/30 xl:hidden" />
@@ -239,11 +235,11 @@ export default function ContactPage() {
                   transition={{ duration: 1 }}
                   style={{ transformOrigin: "left" }}
                 >
-                  What should I call you?
+                  Your name?
                 </motion.div>
                 <input
                   type="text"
-                  placeholder="Type your name"
+                  placeholder="Enter your name"
                   className="w-full border-0 py-3 outline-none focus:text-primary text-primary focus:ring-0 text-4xl md:text-6xl placeholder-text/40"
                   value={name}
                   onInput={(e) => {

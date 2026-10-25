@@ -7,12 +7,12 @@ import {
 import {
   SiTypescript,
   SiPostgresql,
-  SiSanity,
-  SiMdx,
   SiVercel,
   SiFigma,
+  SiOpenai,
+  SiSanity,
 } from "react-icons/si";
-import { TbBrandFramerMotion } from "react-icons/tb";
+import { TbApi, TbBrandFramerMotion } from "react-icons/tb";
 import { FaGitAlt } from "react-icons/fa";
 import { DiMsqlServer } from "react-icons/di";
 
@@ -23,36 +23,39 @@ type ToolboxGroup = {
 
 const TOOLBOX: ToolboxGroup[] = [
   {
-    title: "Frontend",
+    title: "APPLICATION DEVELOPMENT",
     items: [
       { label: "Next.js", icon: <RiNextjsFill /> },
       { label: "React", icon: <RiReactjsFill /> },
       { label: "TypeScript", icon: <SiTypescript /> },
-      { label: "Tailwind CSS", icon: <RiTailwindCssFill /> },
-      { label: "Framer Motion", icon: <TbBrandFramerMotion /> },
-    ],
-  },
-  {
-    title: "Backend & Data",
-    items: [
       { label: "Node.js", icon: <RiNodejsFill /> },
-      { label: "PostgreSQL", icon: <SiPostgresql /> },
-      { label: "SQL Server", icon: <DiMsqlServer /> },
+      { label: "Tailwind CSS", icon: <RiTailwindCssFill /> },
     ],
   },
   {
-    title: "Content & CMS",
+    title: "Data & Integrations",
     items: [
-      { label: "Sanity CMS", icon: <SiSanity /> },
-      { label: "MDX", icon: <SiMdx /> },
+      { label: "SQL Server", icon: <DiMsqlServer /> },
+      { label: "PostgreSQL", icon: <SiPostgresql /> },
+      { label: "Rest APIs", icon: <TbApi /> },
+      { label: "MSSQL", icon: <DiMsqlServer /> },
+      { label: "Horizon ERP integration", icon: <TbApi /> },
     ],
   },
   {
-    title: "Tooling",
+    title: "AI development",
+    items: [
+      { label: "ChatGPT", icon: <SiOpenai /> },
+      { label: "Codex", icon: <SiOpenai /> },
+    ],
+  },
+  {
+    title: "Tools & Delivery",
     items: [
       { label: "Git", icon: <FaGitAlt /> },
       { label: "Vercel", icon: <SiVercel /> },
       { label: "Figma", icon: <SiFigma /> },
+      { label: "Sanity CMS", icon: <SiSanity /> },
     ],
   },
 ];

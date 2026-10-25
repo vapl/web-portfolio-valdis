@@ -14,25 +14,25 @@ const STEPS: Step[] = [
     index: "01",
     title: "Understand the problem",
     description:
-      "I start by understanding the business goal, constraints, and what actually needs to be solved.",
+      "I start by understanding the real business need, existing process, constraints, users and data before deciding what should be built.",
   },
   {
     index: "02",
-    title: "Design the system",
+    title: "Design the solution",
     description:
-      "I design a clear structure and architecture before touching any code.",
+      "I define the workflow, data structure and system architecture, then choose the simplest approach that can solve the problem reliably.",
   },
   {
     index: "03",
-    title: "Build & test",
+    title: "Build, test & iterate",
     description:
-      "Implementation with fast feedback, testing early instead of fixing later.",
+      "I use modern development and AI tools to move quickly, but I review the generated code, test early and improve the solution through real feedback.",
   },
   {
     index: "04",
-    title: "Deliver & support",
+    title: "Deliver & improve",
     description:
-      "Clean delivery, documentation, and a system clients can actually maintain.",
+      "I deploy the solution, document the important parts and continue improving it based on how people actually use it.",
   },
 ];
 

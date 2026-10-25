@@ -49,6 +49,7 @@ export default function IntroCard({
                 font-medium tracking-[-0.02em]
                 text-[clamp(2.25rem,6vw,4.25rem)]
                 leading-[0.95]
+                text-zinc-900 dark:text-zinc-300
               "
             >
               {title}
