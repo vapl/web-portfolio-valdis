@@ -1,7 +1,13 @@
 // "use client"; // Not needed for a static policy page
 
 import React from "react";
+import type { Metadata } from "next";
 import EmailLink from "@/components/contact/EmailLink";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "How contact messages and website analytics are handled on Valdis Vascenkovs's portfolio.",
+};
 
 // Tip: keep the component name PascalCase for conventions
 const PrivacyPage = () => {

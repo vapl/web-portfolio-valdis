@@ -9,14 +9,6 @@ type Common = {
   mode?: "container" | "bleed";
 };
 
-type Img = Common & {
-  type: "image";
-  src: string;
-  alt?: string;
-  width?: number;
-  height?: number;
-};
-
 type Vid = Common & {
   type: "video";
   src: string;

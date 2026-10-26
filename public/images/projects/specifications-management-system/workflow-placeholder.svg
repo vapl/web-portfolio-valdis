@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" role="img" aria-labelledby="title description">
+  <title id="title">Specification editing workflow — image placeholder</title>
+  <desc id="description">A labelled placeholder for a future project image. This is not a screenshot of the application.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1600" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1f2329"/>
+      <stop offset="1" stop-color="#101216"/>
+    </linearGradient>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M80 0H0V80" stroke="#ffffff" stroke-opacity=".035"/>
+    </pattern>
+  </defs>
+  <path fill="url(#background)" d="M0 0h1600v1000H0z"/>
+  <path fill="url(#grid)" d="M0 0h1600v1000H0z"/>
+  <rect x="120" y="100" width="1360" height="800" rx="24" stroke="#ffffff" stroke-opacity=".13"/>
+  <rect x="152" y="132" width="1296" height="736" rx="12" stroke="#d97706" stroke-opacity=".3" stroke-dasharray="10 14"/>
+  <g stroke="#d97706" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="752" y="342" width="96" height="80" rx="10"/>
+    <circle cx="780" cy="367" r="8"/>
+    <path d="m752 405 27-22 20 16 22-27 27 33"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="800" y="480" fill="#d97706" font-size="18" letter-spacing="5">SCREENSHOT PLACEHOLDER</text>
+    <text x="800" y="548" fill="#e5e7eb" font-size="42">Specification editing workflow</text>
+    <text x="800" y="594" fill="#9ca3af" font-size="22">Image coming soon</text>
+  </g>
+  <path d="M752 662h96" stroke="#d97706" stroke-opacity=".6" stroke-width="2"/>
+</svg>

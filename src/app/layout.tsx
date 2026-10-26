@@ -24,8 +24,12 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "My Web Portfolio",
-  description: "My personal developer portfolio",
+  title: {
+    default: "Valdis Vascenkovs | Internal Tools & Web Applications",
+    template: "%s | Valdis Vascenkovs",
+  },
+  description:
+    "Internal tools, business automation, ERP integrations and web applications built by Valdis Vascenkovs with modern web technologies and AI-assisted development.",
 };
 
 export default function RootLayout({

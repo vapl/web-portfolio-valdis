@@ -45,10 +45,10 @@ export default function ProcessSpine() {
   });
 
   return (
-    <section ref={sectionRef} className="relative mx-auto max-w-3xl py-32">
+    <section ref={sectionRef} className="relative mx-auto w-full max-w-3xl py-16 md:py-32">
       {/* Line */}
       <motion.div
-        className="absolute left-1/2 -translate-x-1/2 origin-top top-0 h-full w-px bg-white/10"
+        className="absolute left-1.5 top-0 h-full w-px origin-top bg-white/10 md:left-1/2 md:-translate-x-1/2"
         style={{ scaleY: scrollYProgress }}
       />
 
@@ -91,20 +91,20 @@ function ProcessStep({
   const y = useTransform(progress, [threshold, threshold + range], [0, 0]);
 
   return (
-    <div className="relative grid grid-cols-[1fr_auto_1fr]">
+    <div className="relative grid grid-cols-1 md:grid-cols-[1fr_auto_1fr]">
       {/* Dot */}
       <motion.div
         style={{ opacity, scale }}
-        className="absolute left-1/2 -translate-x-1/2 top-1 h-3 w-3 rounded-full bg-primary"
+        className="absolute left-0 top-1 h-3 w-3 rounded-full bg-primary md:left-1/2 md:-translate-x-1/2"
       />
 
       {/* Content */}
       <motion.div
         style={{ opacity, y }}
-        className={`flex flex-col ${
+        className={`flex min-w-0 flex-col pl-8 text-left md:pl-0 ${
           side === "right"
-            ? "col-start-3 ml-16 text-left"
-            : "col-start-1 mr-16 text-right"
+            ? "md:col-start-3 md:ml-12 md:text-left"
+            : "md:col-start-1 md:mr-12 md:text-right"
         }`}
       >
         <span className="text-lg tracking-widest text-white/40">

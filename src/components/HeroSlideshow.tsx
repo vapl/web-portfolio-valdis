@@ -13,32 +13,29 @@ export default function HeroSlideshow({
   segmentMs = 3000,
   projects,
 }: HeroSlideshowProps) {
-  const segCount = Math.max(1, Math.min(3, projects.length));
+  const projectCount = projects.length;
 
   const [index, setIndex] = useState(0); // current slide index
   const [progress, setProgress] = useState(0); // current segment 0..1
-  const [activeSegment, setActiveSegment] = useState(0);
   const [paused, setPaused] = useState(false);
   const rafRef = useRef<number | null>(null);
   const startRef = useRef<number | null>(null);
-  const lastSegmentRef = useRef<number>(-1);
-  const segCountRef = useRef(segCount);
-  const segDurRef = useRef<number>(segmentMs);
+  const firstIndexRef = useRef(0);
   const pauseStartRef = useRef<number | null>(null);
 
   // Reset animation when segment count or duration changes (if you change constants)
   useEffect(() => {
-    segCountRef.current = segCount;
-    segDurRef.current = segmentMs;
-
     startRef.current = null;
-    lastSegmentRef.current = -1;
+    firstIndexRef.current = 0;
+    pauseStartRef.current = null;
+    setIndex(0);
     setProgress(0);
-    setActiveSegment(0);
-  }, [segCount, segmentMs]);
+  }, [projectCount, segmentMs]);
 
   // Main RAF loop: advance per-segment and switch slides each segment
   useEffect(() => {
+    if (projectCount === 0) return;
+
     const tick = (t: number) => {
       // Enter pause mode
       if (paused) {
@@ -59,45 +56,45 @@ export default function HeroSlideshow({
       if (startRef.current == null) startRef.current = t;
       const elapsed = t - startRef.current;
 
-      const SEG_DUR = segDurRef.current;
-      const SEGMENTS = segCountRef.current;
+      const active = Math.floor(elapsed / segmentMs);
 
-      const active = Math.floor(elapsed / SEG_DUR);
-      const segElapsed = elapsed % SEG_DUR;
-      const segProgress = segElapsed / SEG_DUR;
-
-      setProgress(segProgress);
-      setActiveSegment(active % SEGMENTS);
-
-      // Switch slide on every segment transition
-      if (active !== lastSegmentRef.current) {
-        lastSegmentRef.current = active;
-        setIndex((i) => (i + 1) % projects.length);
-      }
+      setProgress((elapsed % segmentMs) / segmentMs);
+      setIndex((firstIndexRef.current + active) % projectCount);
 
       rafRef.current = requestAnimationFrame(tick);
     };
 
     rafRef.current = requestAnimationFrame(tick);
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
-  }, [paused, projects.length]);
+  }, [paused, projectCount, segmentMs]);
 
-  const current = projects[index];
+  const current = projects[index] ?? projects[0];
+  if (!current) return null;
+
+  const selectProject = (selectedIndex: number) => {
+    firstIndexRef.current = selectedIndex;
+    startRef.current = null;
+    pauseStartRef.current = null;
+    setIndex(selectedIndex);
+    setProgress(0);
+  };
 
   return (
-    <div className="relative h-svh w-full overflow-hidden">
+    <div className="relative min-h-svh w-full overflow-hidden">
       {/* Absolute stack so slides overlap and can crossfade */}
       <ProjectSlide
-        abbreviation={current.abbreviation}
+        title={current.title}
+        excerpt={current.excerpt}
         image={current.cover}
         slug={current.slug}
         progress={progress}
-        activeSegment={activeSegment}
-        segments={segCount}
+        activeSegment={index}
+        segments={projectCount}
+        projectTitles={projects.map((project) => project.title)}
         onPauseChange={setPaused}
-        onSegmentClick={(index) => setActiveSegment(index)}
+        onSegmentClick={selectProject}
       />
     </div>
   );

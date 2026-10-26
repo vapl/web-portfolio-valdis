@@ -12,7 +12,7 @@ import {
   SiOpenai,
   SiSanity,
 } from "react-icons/si";
-import { TbApi, TbBrandFramerMotion } from "react-icons/tb";
+import { TbApi } from "react-icons/tb";
 import { FaGitAlt } from "react-icons/fa";
 import { DiMsqlServer } from "react-icons/di";
 
@@ -38,7 +38,6 @@ const TOOLBOX: ToolboxGroup[] = [
       { label: "SQL Server", icon: <DiMsqlServer /> },
       { label: "PostgreSQL", icon: <SiPostgresql /> },
       { label: "Rest APIs", icon: <TbApi /> },
-      { label: "MSSQL", icon: <DiMsqlServer /> },
       { label: "Horizon ERP integration", icon: <TbApi /> },
     ],
   },

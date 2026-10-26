@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -21,6 +20,8 @@ export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState("");
+  const [formError, setFormError] = useState("");
   const [errors, setErrors] = useState<{
     name?: string[];
     email?: string[];
@@ -37,7 +38,7 @@ export default function ContactPage() {
     const e: typeof errors = {};
     if (name.trim().length < 3)
       e.name = ["Name must be at least 3 characters."];
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
       e.email = ["Please enter a valid email"];
     if (message.trim().length < 10)
       e.message = ["Message should be at least 10 characters."];
@@ -49,20 +50,28 @@ export default function ContactPage() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
+    if (status === "sending") return;
     if (!validateClient()) return;
     setStatus("sending");
     setErrors({});
+    setFormError("");
     try {
-      const res = await fetch("api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message, hp: "" }),
+        body: JSON.stringify({ name, email, message, hp: website }),
       });
 
-      const json = await res.json();
+      const json = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
-        setErrors(json.error ?? {});
+      if (!res.ok || json.ok !== true) {
+        setErrors(json.errors ?? {});
+        setFormError(
+          json.error ??
+            (json.errors
+              ? "Please check the highlighted fields."
+              : "Unable to send your message. Please try again or email me directly."),
+        );
         setStatus("error");
         return;
       }
@@ -70,6 +79,7 @@ export default function ContactPage() {
       setStatus("success");
       setMessage("");
     } catch {
+      setFormError("Unable to connect. Please try again or email me directly.");
       setStatus("error");
     }
   }
@@ -222,11 +232,25 @@ export default function ContactPage() {
           <div className="flex flex-col items-start justify-start pt-6 pb-18 xl:pt-53">
             <motion.form
               onSubmit={onSubmit}
+              noValidate
+              aria-busy={status === "sending"}
               className="w-full"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.25 }}
             >
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="contact-website">Leave this field empty</label>
+                <input
+                  id="contact-website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(event) => setWebsite(event.target.value)}
+                />
+              </div>
               <div className="relative">
                 <motion.div
                   className="text-xl text-text mb-2"
@@ -238,7 +262,12 @@ export default function ContactPage() {
                   Your name?
                 </motion.div>
                 <input
+                  id="contact-name"
+                  aria-label="Your name"
+                  name="name"
+                  autoComplete="name"
                   type="text"
+                  maxLength={80}
                   placeholder="Enter your name"
                   className="w-full border-0 py-3 outline-none focus:text-primary text-primary focus:ring-0 text-4xl md:text-6xl placeholder-text/40"
                   value={name}
@@ -281,7 +310,12 @@ export default function ContactPage() {
                         your e-mail
                       </span>
                       <input
+                        id="contact-email"
+                        aria-label="Your email"
+                        name="email"
+                        autoComplete="email"
                         type="email"
+                        maxLength={254}
                         placeholder="Where can I reach you?"
                         value={email}
                         onChange={(e) => {
@@ -291,7 +325,7 @@ export default function ContactPage() {
                           // clear or set error live
                           setErrors((prev) => ({
                             ...prev,
-                            email: isValidEmail(v) ? undefined : [""],
+                            email: undefined,
                           }));
                         }}
                         onBlur={() => {
@@ -327,17 +361,20 @@ export default function ContactPage() {
                       exit={{ opacity: 0, y: -12 }}
                       transition={{ delay: 0.5, duration: 0.85 }}
                     >
-                      <span className="flex justify-between items-end font-light outline-none text-xl text-primary">
+                      <div className="flex justify-between items-end font-light outline-none text-xl text-primary">
                         your message
                         {message.trim() && (
                           <p className="mt-1 text-sm text-text/60 text-right">
                             {message.trim().length} /2000
                           </p>
                         )}
-                      </span>
+                      </div>
 
                       {/* Character counter */}
                       <textarea
+                        id="contact-message"
+                        aria-label="Your message"
+                        name="message"
                         placeholder="What are you working on?"
                         rows={4}
                         maxLength={2000}
@@ -348,7 +385,7 @@ export default function ContactPage() {
                           // clear or set error live
                           setErrors((prev) => ({
                             ...prev,
-                            message: m.trim().length > 10 ? [""] : [""],
+                            message: undefined,
                           }));
                         }}
                         onBlur={() => {
@@ -359,11 +396,10 @@ export default function ContactPage() {
                             message:
                               message.trim().length < 10
                                 ? ["Message should be at least 10 characters."]
-                                : [""],
+                                : undefined,
                           }));
                         }}
-                        {...{ resize: "true" }}
-                        className="w-full border-0 py-3 outline-none focus:text-text text-text focus:ring-0 text-xl placeholder-text/40"
+                        className="w-full resize-y border-0 py-3 outline-none focus:text-text text-text focus:ring-0 text-xl placeholder-text/40"
                         aria-invalid={!!errors.message}
                         aria-describedby="message-error"
                       />
@@ -399,12 +435,18 @@ export default function ContactPage() {
                       <Button
                         icon
                         type="submit"
+                        disabled={status === "sending"}
                         status={status}
                         value="Get in touch!"
                       />
 
                       {/* Global feedback */}
-                      <div className="flex h-8">
+                      <div className="min-h-8" aria-live="polite">
+                        {formError && (
+                          <p role="alert" className="mt-4 text-sm text-red-400">
+                            {formError}
+                          </p>
+                        )}
                         {status === "success" && (
                           <p
                             role="status"

@@ -15,6 +15,7 @@ type LayoutProps = {
     excerpt: string;
     cover: string;
     tags: string[];
+    highlights?: string[];
     publishedAt: string;
     liveUrl?: string;
     githubUrl?: string;
@@ -37,6 +38,7 @@ export const CaseStudyLayout = ({
         imageSrc={meta.cover}
         title={meta.title}
         excerpt={meta.excerpt}
+        highlights={meta.highlights ?? meta.tags.slice(0, 4)}
         shrinkDistance={400}
         bottomOffset={82}
         containerPadBase={260}

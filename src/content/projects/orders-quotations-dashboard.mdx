@@ -1,0 +1,162 @@
+---
+slug: orders-quotations-dashboard
+abbreviation: OQ
+title: Orders & Quotations Dashboard
+excerpt: Automated Horizon ERP reporting, replacing manual CSV and Excel preparation.
+cover: /images/projects/orders-quotations-dashboard/orders-cover-img.png
+tags: ["Next.js", "Horizon ERP", "Microsoft SQL Server", "SQL", "Data integration", "Reporting"]
+highlights: ["ERP Integration", "MSSQL", "Operational Dashboard", "3-day build (part-time)"]
+publishedAt: "2026-10-25"
+sortOrder: 2
+---
+
+<Section id="overview">
+  <IntroCard
+    eyebrow="Case study"
+    title="From manual exports to automatic ERP reporting"
+    invert={true}
+    maxWidth="xl"
+  >
+    I built a Next.js dashboard connected to Horizon ERP data in Microsoft SQL
+    Server. It gives management a current view of quotations, orders and KPIs,
+    replacing repeated CSV exports and spreadsheet preparation.
+
+    Development, testing and adjustments took place over three days, working in
+    sessions rather than full-time.
+
+    The dashboard extends an internal production system already used by designers
+    and design engineers, making operational reporting available within the same
+    environment.
+  </IntroCard>
+</Section>
+
+<Section id="dashboard-preview">
+  <Media
+    images={[
+      {
+        src: "/images/projects/orders-quotations-dashboard/orders-img.png",
+        alt: "Orders dashboard showing order totals, product and service values, sales targets and year-over-year comparison",
+        caption: "Order KPIs, sales targets and year-over-year comparison",
+        width: 1672,
+        height: 941,
+      },
+    ]}
+  />
+</Section>
+
+<Section id="challenge">
+  <IntroCard
+    eyebrow="The challenge"
+    title="Finding the right data in an unfamiliar ERP database"
+    invert={true}
+    maxWidth="xl"
+  >
+    With no ready-made API or dataset, I investigated Horizon&apos;s Microsoft SQL
+    Server tables, mapped their relationships and wrote queries for quotations,
+    orders and KPIs.
+
+    Data investigation and retrieval spanned two of the three development days.
+    The integration had to work alongside the existing ERP system without
+    disrupting employees&apos; daily work.
+  </IntroCard>
+</Section>
+
+<Section id="problem" title="Problem">
+  <ul className="list-disc space-y-3 pl-6 text-lg text-text/80">
+    <li>CSV exports from several systems needed manual preparation.</li>
+    <li>Data was sorted and combined in Excel for a Power BI report.</li>
+    <li>Reports lagged behind source data that refreshed hourly or more often.</li>
+    <li>The same preparation had to be repeated each reporting cycle.</li>
+  </ul>
+  <PullQuote>
+    Useful reporting starts with understanding the company&apos;s data and turning
+    it into information people can act on.
+  </PullQuote>
+</Section>
+
+<Section id="solution">
+  <IntroCard
+    eyebrow="Solution"
+    title="Automatic reporting from existing company data"
+    invert={true}
+    maxWidth="xl"
+  >
+    SQL queries retrieve and aggregate the required Horizon data. The application
+    processes it automatically and presents quotations, orders and business KPIs
+    with filtering, period comparison and CSV export.
+
+    The dashboard adds an analytical layer to the existing ERP data. Users can
+    review current figures without rebuilding the spreadsheet workflow each
+    time they need an update.
+  </IntroCard>
+  <Media
+    images={[
+      {
+        src: "/images/projects/orders-quotations-dashboard/offer-img.png",
+        alt: "Quotations dashboard showing quote counts and values, monthly trends, designer comparisons and client approval statuses",
+        caption: "Quotation KPIs, monthly trends and client approval statuses",
+        width: 1672,
+        height: 941,
+      },
+    ]}
+  />
+</Section>
+
+<Section id="results">
+  <IntroCard
+    eyebrow="Results"
+    title="Manual report preparation automated"
+    invert={true}
+    maxWidth="xl"
+  >
+    Automated retrieval and processing eliminate an estimated hour-plus of
+    manual preparation per reporting cycle. Users can review current operational
+    figures without rebuilding spreadsheet snapshots.
+
+    The consolidated information also makes designers&apos; pay calculations easier
+    for management.
+
+    This dashboard extends the
+    <a href="/projects/specifications-management-system">Specifications Management System</a>.
+  </IntroCard>
+</Section>
+
+<Section id="implementation">
+  <IntroCard
+    eyebrow="My role & implementation"
+    title="From database investigation to a working dashboard"
+    invert={true}
+    maxWidth="xl"
+  >
+    As the sole developer, I designed the architecture, investigated the Horizon
+    data model, and handled SQL queries, integration and frontend implementation.
+
+    AI tools accelerated implementation. I remained responsible for architecture,
+    data modelling, integration decisions, validation and the final solution.
+
+    Built with Next.js, the dashboard extends the internal system on the
+    company&apos;s local server, with access through the company VPN.
+  </IntroCard>
+</Section>
+
+<Section id="scope" title="Project scope">
+  <div className="max-w-4xl text-lg leading-relaxed text-text/80">
+    The project covered the reporting workflow from database investigation to
+    the interface: SQL queries, Microsoft SQL Server integration, data
+    transformation and KPI logic, followed by filtering, period comparisons and
+    CSV export. Frontend implementation, testing and adjustments were included
+    in the delivery window.
+  </div>
+  <Metrics
+    items={[
+      { label: "Development, testing & adjustments", value: "3 days (part-time)" },
+      { label: "Horizon data retrieval", value: "Across 2 days" },
+      { label: "Estimated manual preparation removed per cycle", value: "> 1 hour" },
+      { label: "Role", value: "Sole developer" },
+      { label: "Data source", value: "Horizon ERP" },
+      { label: "Database", value: "Microsoft SQL Server" },
+      { label: "Status", value: "Live company data" },
+      { label: "Export", value: "CSV" },
+    ]}
+  />
+</Section>

@@ -41,7 +41,7 @@ import {
   </IntroCard>
 </Section>
 
-<Section id="solution" title="">
+<Section id="preview" title="">
   <Media
     images={[
       {
@@ -56,14 +56,14 @@ import {
 <Section>
   <IntroCard
     eyebrow="The challenge"
-    title="Transforming a chaotic brand into a clear and compelling digital identity"
+    title="Creating a consistent and maintainable digital presence"
     invert={true}
     maxWidth="xl"
   >
     The barbershop had no structured content, no design system, and no CMS.
-    Everything — from the service groups to the multilingual text blocks — had
-    to be organized, mapped and made editable. The result needed to feel
-    premium, load instantly, and work flawlessly on all devices.
+    Service groups and multilingual content needed to be organized and made
+    editable. The website needed to reflect the brand, work across screen sizes
+    and support regular content updates.
   </IntroCard>
 </Section>
 
@@ -76,9 +76,12 @@ import {
 </Section>
 
 <Section id="problem" title="Problem">
-  - No CMS, no structure, no real content strategy - Services constantly
-  changed, requiring manual edits - No mobile optimization - Branding looked
-  cheap and inconsistent
+  <ul className="list-disc space-y-3 pl-6 text-lg text-text/80">
+    <li>No structured CMS for services and multilingual content.</li>
+    <li>Pricing and service changes required manual website edits.</li>
+    <li>The existing presentation needed a consistent visual direction.</li>
+    <li>Layouts needed to work across mobile and desktop screens.</li>
+  </ul>
   <PullQuote>
     The goal was simple: make 88 Barbershop feel as good online as it does when
     you walk through their door.
@@ -114,11 +117,9 @@ import {
 <Section id="results" title="Results">
   <Metrics
     items={[
-      { label: "Performance score", value: "98+" },
       { label: "Languages", value: "3" },
-      { label: "CMS entities", value: "40+" },
-      { label: "Load time", value: "< 300ms" },
-      { label: "Project cost", value: "€2100" },
+      { label: "Content management", value: "Sanity CMS" },
+      { label: "Content updates", value: "Managed by the team" },
       { label: "Project duration", value: "5 weeks" },
     ]}
   />

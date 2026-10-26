@@ -12,37 +12,32 @@ export default function ServicesSection() {
   const services = [
     {
       id: 1,
-      title: "Web Development",
+      title: "Internal Tools",
       description:
-        "Modern and fast websites built with Next.js, React, and Tailwind.",
+        "Custom systems that simplify everyday work, centralize information, and replace fragmented manual processes.",
       iconName: icon.cilApplications,
     },
     {
       id: 2,
-      title: "Web Applications",
+      title: "Business Automation",
       description:
-        "Interactive solutions with backend and databases (Node.js, Supabase, PostgreSQL).",
-      iconName: icon.cilStorage,
+        "Automation of repetitive workflows, reporting, data processing, and document-heavy tasks.",
+      iconName: icon.cilBolt,
     },
     {
       id: 3,
-      title: "UI/UX Design",
+      title: "Data & Integrations",
       description:
-        "User-friendly design and animations with Framer Motion and Figma.",
-      iconName: icon.cilBrush,
+        "Connecting databases, APIs, ERP systems, and existing company data into practical working solutions.",
+      iconName: icon.cilStorage,
     },
     {
       id: 4,
-      title: "Automation & Integrations",
-      description: "API integrations and custom scripts to reduce manual work.",
-      iconName: icon.cilBolt,
+      title: "Web Applications",
+      description:
+        "Full-stack applications built with modern web technologies, databases, and AI-assisted development.",
+      iconName: icon.cilBrowser,
     },
-    // {
-    //   id: 5,
-    //   title: "E-commerce",
-    //   description: "Online stores with payment systems and CMS integration.",
-    //   iconName: icon.cilCart,
-    // },
   ];
 
   const wrapperRef = useRef<HTMLDivElement>(null);

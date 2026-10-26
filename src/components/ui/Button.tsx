@@ -56,7 +56,7 @@ const Button: React.FC<ButtonProps> = ({
   const baseStyles = `
     flex gap-2 justify-center items-center px-5 py-3 rounded-xl font-semibold text-sm uppercase 
     transition-all duration-100 hover:ease-out
-    focus:outline-none
+    focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary
     ${
       !isDisabled
         ? "cursor-pointer hover:scale-[1.02] hover:shadow-lg active:scale-95"
@@ -126,19 +126,8 @@ const Button: React.FC<ButtonProps> = ({
   // If a link is provided, render a Link component
   if (link && !disabled) {
     return (
-      <Link href={link} className="inline-block">
-        <span
-          className={buttonClasses}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-            }
-          }}
-        >
-          {value}
-        </span>
+      <Link href={link} className={buttonClasses}>
+        {value}
       </Link>
     );
   }
@@ -148,7 +137,7 @@ const Button: React.FC<ButtonProps> = ({
     <button
       type={type}
       onClick={onClick}
-      disabled={disabled}
+      disabled={isDisabled}
       className={buttonClasses}
     >
       {renderIcon()}

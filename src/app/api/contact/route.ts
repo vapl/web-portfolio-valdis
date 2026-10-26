@@ -6,13 +6,14 @@ export const runtime = "nodejs";
 
 // --- Validation schema (zod) ---
 const schema = z.object({
-  name: z.string().min(3, "Name must be at least 3 characters").max(80),
-  email: z.string().email("Please enter a valid email"),
+  name: z.string().trim().min(3, "Name must be at least 3 characters").max(80),
+  email: z.string().trim().email("Please enter a valid email").max(254),
   message: z
     .string()
+    .trim()
     .min(10, "Message should be at least 10 characters.")
     .max(2000),
-  hp: z.string().max(0).optional(), // honneypot MUST be empty
+  hp: z.string().max(512).optional(),
 });
 
 // --- Tiny in-memory rate-limit per IP (60s window) ---
@@ -22,6 +23,9 @@ const MAX_HITS = 5; // allow 5 requests/min/IP
 
 function rateLimit(ip: string) {
   const now = Date.now();
+  for (const [address, hit] of hits) {
+    if (now - hit.ts >= WINDOW_MS) hits.delete(address);
+  }
   const entry = hits.get(ip);
 
   if (!entry || now - entry.ts > WINDOW_MS) {
@@ -34,17 +38,7 @@ function rateLimit(ip: string) {
   return false;
 }
 
-const API_KEY = process.env.RESEND_API_KEY;
-console.log("API", API_KEY?.slice(0, 6)); // <- šis izprintēs pirmos 6 simbolus
-if (!API_KEY) {
-  throw new Error("Missing RESEND_API_KEY in environment variables");
-}
-
-const resend = new Resend(API_KEY);
-
 export async function POST(req: NextRequest) {
-  console.log("FROM", process.env.CONTACT_FROM);
-  console.log("TO", process.env.CONTACT_TO);
   try {
     // Basic rate limit
     const ip =
@@ -62,7 +56,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const data = await req.json();
+    const maxBodyLength = 16_384;
+    if (Number(req.headers.get("content-length")) > maxBodyLength) {
+      return NextResponse.json(
+        { ok: false, error: "Your message is too large." },
+        { status: 413 },
+      );
+    }
+
+    const body = await req.text();
+    if (body.length > maxBodyLength) {
+      return NextResponse.json(
+        { ok: false, error: "Your message is too large." },
+        { status: 413 },
+      );
+    }
+
+    let data: unknown;
+    try {
+      data = JSON.parse(body);
+    } catch {
+      return NextResponse.json(
+        { ok: false, error: "Invalid request. Please try again." },
+        { status: 400 },
+      );
+    }
     const parsed = schema.safeParse(data);
 
     if (!parsed.success) {
@@ -86,10 +104,25 @@ export async function POST(req: NextRequest) {
 
     const { name, email, message } = parsed.data;
 
+    const apiKey = process.env.RESEND_API_KEY;
+    const from = process.env.CONTACT_FROM;
+    const to = process.env.CONTACT_TO;
+    if (!apiKey || !from || !to) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: "The contact form is temporarily unavailable. Please email me directly.",
+        },
+        { status: 503 },
+      );
+    }
+
+    const resend = new Resend(apiKey);
+
     // Send via Resend
     const { error } = await resend.emails.send({
-      from: process.env.CONTACT_FROM!,
-      to: process.env.CONTACT_TO!,
+      from,
+      to,
       replyTo: email,
       subject: `New portfolio inquiry — ${name}`,
       text:
@@ -99,7 +132,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (error) {
-      console.error(error);
+      console.error("Contact email delivery failed.");
       return NextResponse.json(
         { ok: false, error: "Failed to send email. Please try again later." },
         { status: 500 }
@@ -107,8 +140,8 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ ok: true });
-  } catch (e) {
-    console.error(e);
+  } catch {
+    console.error("Contact request failed.");
     return NextResponse.json(
       { ok: false, error: "Unexpected error. Please try again later." },
       { status: 500 }

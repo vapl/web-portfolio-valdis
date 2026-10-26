@@ -12,6 +12,7 @@ type HeroCoverProps = {
   title: string;
   /** Optional subtitle/excerpt */
   excerpt?: string;
+  highlights?: string[];
   liveUrl?: string;
   githubUrl?: string;
 
@@ -28,6 +29,7 @@ const HeroShrinkingCover = ({
   imageSrc,
   title,
   excerpt,
+  highlights = [],
   liveUrl,
   githubUrl,
   shrinkDistance = 500,
@@ -37,19 +39,8 @@ const HeroShrinkingCover = ({
 }: HeroCoverProps) => {
   // --- 1) Measure viewport + choose container padding (match your body container) ---
   const [vh, setVh] = useState(800);
-  const [isMobile, setIsmobile] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const onResize = () => {
-      setIsmobile(window.innerWidth < 768);
-    };
-
-    onResize();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  });
 
   useEffect(() => {
     // Keep it super simple; no abservers needed
@@ -92,9 +83,16 @@ const HeroShrinkingCover = ({
   const textOpacity = useTransform(p, [0, 1], [1, 1]);
 
   // Title size transform
-  const titleSizeDesktop = useTransform(p, [0, 1], ["5rem", "3.75rem"]);
-  const titleSizeMobile = useTransform(p, [0, 1], ["5rem", "2.25rem"]);
-  const subtitleSize = useTransform(p, [0, 1], ["2rem", "1.2rem"]);
+  const titleSize = useTransform(
+    p,
+    [0, 1],
+    ["clamp(2rem, 6vw, 5rem)", "clamp(1.75rem, 5vw, 3.75rem)"],
+  );
+  const subtitleSize = useTransform(
+    p,
+    [0, 1],
+    ["clamp(1.125rem, 2.5vw, 2rem)", "clamp(1rem, 2vw, 1.2rem)"],
+  );
 
   // Delta from viewport center to container's left edge and bottom offset:
   const endDY = vh / 2 - bottomOffset;
@@ -118,8 +116,15 @@ const HeroShrinkingCover = ({
               priority
               className="object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/55" />
           </motion.div>
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/75 via-black/65 to-black/55"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/15"
+          />
         </div>
 
         {/* Text block (one wrapper, continuous motion) */}
@@ -132,19 +137,40 @@ const HeroShrinkingCover = ({
           }}
         >
           {/* This container must match your page body container */}
-          <div ref={containerRef} className="px-16">
+          <div ref={containerRef} className="px-11 md:px-16">
+            {highlights.length > 0 && (
+              <ul
+                aria-label="Project highlights"
+                className="mb-6 flex flex-wrap gap-2"
+              >
+                {highlights.map((highlight) => (
+                  <li
+                    key={highlight}
+                    className="rounded-full border border-white/30 bg-black/65 px-3 py-1.5 text-xs font-medium tracking-wide text-white shadow-md shadow-black/40 md:text-sm"
+                  >
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            )}
             <motion.h1
-              className="font-bold tracking-tight leading-tight"
+              className="break-words font-bold tracking-tight leading-tight text-white"
               style={{
-                fontSize: isMobile ? titleSizeMobile : titleSizeDesktop,
+                fontSize: titleSize,
+                textShadow:
+                  "0 2px 4px rgba(0, 0, 0, 0.85), 0 8px 24px rgba(0, 0, 0, 0.65)",
               }}
             >
               {title}
             </motion.h1>
             {excerpt && (
               <motion.p
-                className="mt-3 text-text/85 max-w-5xl"
-                style={{ fontSize: subtitleSize }}
+                className="mt-3 max-w-5xl text-white/95"
+                style={{
+                  fontSize: subtitleSize,
+                  textShadow:
+                    "0 1px 3px rgba(0, 0, 0, 0.9), 0 4px 12px rgba(0, 0, 0, 0.7)",
+                }}
               >
                 {excerpt}
               </motion.p>

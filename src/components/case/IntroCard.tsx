@@ -22,7 +22,7 @@ export default function IntroCard({
   maxWidth = "lg",
 }: IntroCardProps) {
   const textBase = invert ? "text-white" : "text-zinc-800";
-  const textDim = invert ? "text-white/70" : "text-zinc-600";
+  const textDim = invert ? "text-white/80" : "text-zinc-600";
   const maxW =
     maxWidth === "md"
       ? "max-w-2xl"
@@ -49,7 +49,6 @@ export default function IntroCard({
                 font-medium tracking-[-0.02em]
                 text-[clamp(2.25rem,6vw,4.25rem)]
                 leading-[0.95]
-                text-zinc-900 dark:text-zinc-300
               "
             >
               {title}
@@ -66,14 +65,18 @@ export default function IntroCard({
                     key={i}
                     className={`${
                       i ? "mt-5 md:mt-6" : ""
-                    } text-base md:text-lg`}
+                    } text-lg leading-[1.7] md:text-xl`}
                   >
                     {para}
                   </p>
                 ))
               ) : (
                 // Render MDX children (can include links, bold text, etc.)
-                <div className="prose text-[clamp(1.4rem,6vw,1.6rem)] font-light prose-zinc dark:prose-invert max-w-none">
+                <div
+                  className={`prose prose-zinc ${
+                    invert ? "prose-invert" : ""
+                  } max-w-none text-[clamp(1.4rem,6vw,1.6rem)] font-normal leading-[1.7] [&>p+p]:mt-6`}
+                >
                   {children}
                 </div>
               )}

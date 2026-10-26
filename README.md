@@ -85,6 +85,27 @@ npm install
 npm run dev
 ```
 
+## Verification
+
+Use Node.js 20.9 or newer, as required by the image processing dependency.
+
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npm audit
+```
+
+Contact route tests replace the email provider; they do not send email.
+The deployed contact form needs `RESEND_API_KEY`, `CONTACT_FROM`, and
+`CONTACT_TO` in the server environment. Without them, it returns a temporary
+unavailability message and visitors can use the direct email link.
+
+Dependency overrides keep Next.js on a patched PostCSS release and use the
+patched selector parser for the typography plugin. Review them during future
+dependency upgrades.
+
 📫 Contact
 
 If you want to discuss:

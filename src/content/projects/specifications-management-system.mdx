@@ -1,0 +1,157 @@
+---
+slug: specifications-management-system
+abbreviation: SM
+title: Specifications Management System
+excerpt: A shared specification workflow with drawing attachments, status tracking and project version management.
+cover: /images/projects/specifications-management-system/specification-management-system-cover.png
+tags: ["Next.js", "Internal tools", "Workflow design", "Data modelling", "Manufacturing"]
+highlights: ["Internal Tool", "Next.js", "Production", "5-day prototype (part-time)"]
+publishedAt: "2026-10-25"
+sortOrder: 1
+---
+
+<Section id="overview">
+  <IntroCard
+    eyebrow="Case study"
+    title="A shared workflow for production specifications"
+    invert={true}
+    maxWidth="xl"
+  >
+    I built an internal Next.js system for designers and design engineers at a
+    manufacturing company. It brings specifications, drawings, statuses and
+    project versions into one shared workflow.
+
+    Started during my software engineering internship, the project continued
+    after the internship ended. It is now in use, with further development guided
+    by production needs and feedback from the team.
+
+    The first usable prototype was ready within five days, working in sessions
+    rather than full-time.
+  </IntroCard>
+</Section>
+
+<Section id="workspace-preview">
+  <Media
+    images={[
+      {
+        src: "/images/projects/specifications-management-system/specification-management-system-workspace.png",
+        alt: "Screenshot of the specification workspace",
+        caption: "Specification workspace",
+        width: 1600,
+        height: 1000,
+      },
+    ]}
+  />
+</Section>
+
+<Section id="challenge">
+  <IntroCard
+    eyebrow="The challenge"
+    title="Understanding the process and connecting its data"
+    invert={true}
+    maxWidth="xl"
+  >
+    Production specifications connect product information, materials, components
+    and manufacturing requirements. I needed to understand the team&apos;s process
+    and model those relationships in a form people could use every day.
+
+    Obtaining and linking the required data took most of the initial development
+    effort. The challenge was making that information consistent and usable
+    across the workflow.
+  </IntroCard>
+</Section>
+
+<Section id="problem" title="Problem">
+  <ul className="list-disc space-y-3 pl-6 text-lg text-text/80">
+    <li>Specifications were stored in individual designers&apos; local folders.</li>
+    <li>The team had no shared view of the order flow.</li>
+    <li>Project versions lacked a controlled management process.</li>
+    <li>Finding current information depended on separate files and individual knowledge.</li>
+  </ul>
+  <PullQuote>
+    The aim was a shared production workflow that people could use and maintain
+    every day.
+  </PullQuote>
+</Section>
+
+<Section id="solution">
+  <IntroCard
+    eyebrow="Solution"
+    title="From a usable prototype to a working internal tool"
+    invert={true}
+    maxWidth="xl"
+  >
+    The first prototype supported complete specification creation, drawing image
+    attachments and status changes.
+
+    The system now also includes controlled project versions and visibility over
+    order flow. Requirements came from real production work, and features were
+    tested with users as the system evolved.
+  </IntroCard>
+  <Media
+    images={[
+      {
+        src: "/images/projects/specifications-management-system/specification-management-system-specifications-workflow.png",
+        alt: "Screenshot of the specification editing workflow",
+        caption: "Specifications, drawing attachments and status tracking",
+        width: 1600,
+        height: 1000,
+      },
+    ]}
+  />
+</Section>
+
+<Section id="results">
+  <IntroCard
+    eyebrow="Results"
+    title="Shared information and controlled project versions"
+    invert={true}
+    maxWidth="xl"
+  >
+    Designers and design engineers now share specifications, follow order flow
+    and manage project versions in one system. Current project information is
+    accessible to the team through a shared process.
+
+    The system also became the foundation for the
+    <a href="/projects/orders-quotations-dashboard">Orders &amp; Quotations Dashboard</a>,
+    which connects ERP data for operational reporting.
+  </IntroCard>
+</Section>
+
+<Section id="implementation">
+  <IntroCard
+    eyebrow="My role & implementation"
+    title="Built end-to-end as the sole developer"
+    invert={true}
+    maxWidth="xl"
+  >
+    I designed the application architecture, modelled the data, handled retrieval
+    and integration, and developed the system end to end.
+
+    AI tools accelerated parts of the implementation. Architecture, integration
+    decisions, validation and final delivery remained my responsibility.
+
+    Built with Next.js, the application runs on the company&apos;s local server,
+    with access through the company VPN.
+  </IntroCard>
+</Section>
+
+<Section id="scope" title="Project scope">
+  <div className="max-w-4xl text-lg leading-relaxed text-text/80">
+    Business process analysis, requirements gathering, workflow design, data
+    modelling, UI development, database logic and user testing, followed by
+    ongoing development as production needs evolve.
+  </div>
+  <Metrics
+    items={[
+      { label: "Environment", value: "Internal production system" },
+      { label: "Status", value: "In use" },
+      { label: "First prototype", value: "5 days (part-time)" },
+      { label: "Development", value: "Ongoing" },
+      { label: "Organization", value: "Manufacturing company" },
+      { label: "Role", value: "Sole developer" },
+      { label: "Framework", value: "Next.js" },
+      { label: "Users", value: "Designers & design engineers" },
+    ]}
+  />
+</Section>

@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
+import type { Metadata } from "next";
 
 import AboutHero from "@/components/AboutHero";
 import { PullQuote } from "@/components/case/blocks";
@@ -10,6 +10,12 @@ import SectionTitle from "@/components/SectionTitle";
 import Toolbox from "@/components/stack/Toolbox";
 import Button from "@/components/ui/Button";
 import { getAllProjects } from "@/lib/getProjects";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "How Valdis Vascenkovs builds internal tools, automates workflows and connects business data using modern web technologies and AI tools.",
+};
 
 export default function AboutPage() {
   const projects = getAllProjects();
@@ -51,7 +57,7 @@ export default function AboutPage() {
               );
             })}
           </div>
-          {/* <Button link="/projects" value="All Projects" /> */}
+          <Button link="/projects" value="All Projects" />
         </div>
       </section>
       <section>
